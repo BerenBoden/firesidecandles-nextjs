@@ -2,3 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.embla_container {
+    display: flex;
+}
+
+.embla {
+    overflow: hidden;
+}
+
+.embla_slide {
+    flex: 0 0 100%;
+}
