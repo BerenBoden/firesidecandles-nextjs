@@ -20,9 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={dancingScript.variable}>
-        <Header />
-        <main>{children}</main>
+      <body className={`${dancingScript.variable}`}>
+        <div className="z-10  relative"><Header /></div>
+        <main className="z-0  relative">{children}</main>
       </body>
     </html>
   );
