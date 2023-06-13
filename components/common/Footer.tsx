@@ -77,7 +77,7 @@ const navigation = {
 
 export default function Footer() {
   return (
-    <footer className="bg-white" aria-labelledby="footer-heading">
+    <footer className="bg-white xl:px-0 px-8" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
@@ -175,13 +175,13 @@ export default function Footer() {
                 id="email-address"
                 autoComplete="email"
                 required
-                className="w-full min-w-0 appearance-none rounded-md border-0 bg-white px-3 py-1.5 text-base text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:w-64 sm:text-sm sm:leading-6 xl:w-full"
+                className="w-full min-w-0 appearance-none border-0 bg-white px-3 py-1.5 text-base text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:w-64 sm:text-sm sm:leading-6 xl:w-full"
                 placeholder="Enter your email"
               />
               <div className="mt-4 sm:ml-4 sm:mt-0 sm:flex-shrink-0">
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full items-center justify-center bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Subscribe
                 </button>
@@ -190,7 +190,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-900/10">
-          <div className="mx-auto max-w-7xl pt-8 md:flex md:items-center md:justify-between">
+          <div className="mx-auto max-w-7xl pt-8 md:flex  md:items-center md:justify-between">
             <div className="flex space-x-6 md:order-2">
               {navigation.social.map((item) => (
                 <a
@@ -203,7 +203,7 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-            <p className="text-xs leading-5 text-gray-500 md:order-1">
+            <p className="text-xs leading-5 text-gray-500 md:order-1 pt-8 md:py-0">
               &copy; {new Date().getFullYear()} firesidecandles.co.nz. All rights
               reserved.
             </p>
