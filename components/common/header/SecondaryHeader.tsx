@@ -58,7 +58,7 @@ export default function SecondaryHeader(data: Page) {
                 <Tab.Group as="div" className="mt-2">
                   <div className="border-b border-gray-200">
                     <Tab.List className="-mb-px flex space-x-8 px-4">
-                      {data.data.data.map(({ attributes }: any) => (
+                      {data.data.map(({ attributes }: any) => (
                         <Tab
                           key={attributes.title}
                           className={({ selected }) =>
@@ -76,7 +76,7 @@ export default function SecondaryHeader(data: Page) {
                     </Tab.List>
                   </div>
                   <Tab.Panels as={Fragment}>
-                    {data.data.data.map(({ attributes }) => (
+                    {data.data.map(({ attributes }) => (
                       <Tab.Panel
                         key={attributes.slug}
                         className="space-y-10 px-4 pb-8 pt-10"

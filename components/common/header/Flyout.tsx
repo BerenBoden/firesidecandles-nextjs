@@ -2,25 +2,16 @@
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { classNames } from "@/lib/classNames";
-import { FlyoutProps } from "@/types/types";
+import { CategoryAttributes, CategoryTagAttributes, Page } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { Dispatch, SetStateAction } from "react";
 import { extractLargestPhoto } from "@/lib/extractLargestPhoto";
 
-export default function Flyout({
-  open,
-  setOpen,
-  data,
-}: {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-  data: FlyoutProps;
-}) {
+export default function Flyout({ data }: { data: Page }) {
   return (
     <Popover.Group className="hidden lg:block lg:self-stretch">
       <div className="flex h-full space-x-8">
-        {data.data.data.map(({ attributes }: any) =>
+        {data.data.map(({ attributes }: any) =>
           attributes.categories.data.length >= 1 ? (
             <Popover key={attributes.slug} className="flex">
               {({ open }) => (
@@ -57,10 +48,18 @@ export default function Flyout({
                           <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
                             <div className="col-start-2 grid grid-cols-2 gap-x-8">
                               {attributes.categories.data.map(
-                                ({ attributes }) => (
+                                ({
+                                  attributes,
+                                }: {
+                                  attributes: CategoryAttributes;
+                                }) => (
                                   <>
                                     {attributes.category_tags.data.map(
-                                      ({ attributes }) => (
+                                      ({
+                                        attributes,
+                                      }: {
+                                        attributes: CategoryTagAttributes;
+                                      }) => (
                                         <>
                                           {attributes.feature?.data && (
                                             <div>
@@ -129,7 +128,11 @@ export default function Flyout({
                             </div>
                             <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
                               {attributes.categories.data.map(
-                                ({ attributes }) => (
+                                ({
+                                  attributes,
+                                }: {
+                                  attributes: CategoryAttributes;
+                                }) => (
                                   <div key={attributes.title}>
                                     <Link
                                       href={attributes.slug}

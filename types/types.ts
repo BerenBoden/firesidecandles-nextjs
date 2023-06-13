@@ -1,128 +1,4 @@
-// export type Category = {
-//   id: number;
-//   attributes: {
-//     createdAt: string;
-//     updatedAt: string;
-//     publishedAt: string;
-//     title: string;
-//     slug: string;
-//   };
-// };
-
-// export type FlyoutProps = {
-//   data: CategoryTag;
-// };
-
-// export type SecondaryHeaderProps = {
-//   data: CategoryTag;
-// };
-
-// export type CategoryTag = {
-//   data: CategoryTagItem[];
-// };
-
-// export type CategoryTagItem = {
-//   id: number;
-//   attributes: {
-//     createdAt: string;
-//     updatedAt: string;
-//     publishedAt: string;
-//     title: string;
-//     slug: string;
-//     categories: {
-//       data: Category[];
-//     };
-//   };
-// };
-
-// export type CategoryProps = CategoryTag;
-
-// export interface Page {
-//   id: number;
-//   attributes: {
-//     title: string;
-//     slug: string;
-//   };
-// }
-
-// export interface Navigation {
-//   pages: Page[];
-// }
-
-// export type NavigationData = {
-//   data: NavigationItem[];
-//   meta: {
-//     pagination: {
-//       page: number;
-//       pageSize: number;
-//       pageCount: number;
-//       total: number;
-//     };
-//   };
-// };
-
-// export type NavigationItem = {
-//   id: number;
-//   attributes: {
-//     title: string;
-//     slug: string | null;
-//     createdAt: string;
-//     updatedAt: string;
-//     publishedAt: string;
-//     categories: {
-//       data: Category[];
-//     };
-//   };
-// };
-
-// interface Feature {
-//   data: null;
-// }
-
-// interface Attributes {
-//   createdAt: string;
-//   updatedAt: string;
-//   publishedAt: string;
-//   slug: string;
-//   title: string;
-//   feature: Feature;
-// }
-
-// interface Data {
-//   id: number;
-//   attributes: Attributes;
-// }
-
-// interface CategoryTags {
-//   data: Data[];
-// }
-
-// interface CategoryAttributes extends Attributes {
-//   category_tags: CategoryTags;
-// }
-
-// interface CategoryData {
-//   id: number;
-//   attributes: CategoryAttributes;
-// }
-
-// interface Categories {
-//   data: CategoryData[];
-// }
-
-// interface MainAttributes extends Attributes {
-//   categories: Categories;
-// }
-
-// interface MainData {
-//   id: number;
-//   attributes: MainAttributes;
-// }
-
-// interface RootObject {
-//   data: MainData[];
-// }
-
+//Page
 export type Page = {
   data: {
     id: number;
@@ -130,7 +6,7 @@ export type Page = {
   }[];
 };
 
-export type PageAttributes = {
+type PageAttributes = {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -139,24 +15,42 @@ export type PageAttributes = {
   categories: Category[];
 };
 
+//Category
 export type Category = {
   data: {
     id: number;
-    attributes: CategoryAttribute[];
+    attributes: CategoryAttributes;
   }[];
 };
 
-export type CategoryAttribute = {
+export type CategoryTag = {
+  data: CategoryTagData[];
+};
+
+export type CategoryTagData = {
+  id: number;
+  attributes: CategoryTagAttributes;
+};
+
+export type CategoryAttributes = {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
   title: string;
   slug: string;
-  category_tags: CategoryTag[];
+  category_tags: CategoryTag;
 };
 
-export type CategoryTag = {};
+export type CategoryTagAttributes = {
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  title: string;
+  slug: string;
+  feature: any;
+};
 
+//Image
 interface ProviderMetadata {
   public_id: string;
   resource_type: string;
@@ -180,7 +74,7 @@ interface Formats {
   small: Format;
   medium: Format;
   thumbnail: Format;
-  [key: string]: Format; // This line allows for additional formats
+  [key: string]: Format;
 }
 
 interface CoverAttributes {

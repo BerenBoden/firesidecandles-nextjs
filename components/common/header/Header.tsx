@@ -387,6 +387,7 @@ async function getNavigation(): Promise<Page> {
 
 export default async function Header() {
   const NavigationData = await getNavigation();
+  console.log(NavigationData);
   return (
     <header className="bg-white fixed w-full ">
       <div className="flex max-w-7xl items-center justify-between py-6 mx-auto px-8 xl:px-0">
@@ -417,7 +418,7 @@ export default async function Header() {
         </div>
       </div>
       <div className="border-b" />
-      <SecondaryHeader data={NavigationData} />
+      <SecondaryHeader {...NavigationData} />
     </header>
   );
 }
