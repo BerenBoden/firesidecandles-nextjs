@@ -128,5 +128,5 @@ export type Product = {
 };
 
 export type ProductData = {
-  data: { data: Product[] };
+  products: { data: Product[] };
 };

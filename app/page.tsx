@@ -2,12 +2,13 @@ import Featured from "@/app/components/home/Featured";
 import Showcase from "@/app/components/home/Showcase";
 import Special from "@/app/components/home/Special";
 import Products from "@/app/components/home/Products";
+import Posts from "@/app/components/home/Posts";
 import Incentives from "./components/home/Incentives";
 import { Metadata } from "next";
 
 async function getHomePage() {
   const res = await fetch(
-    "https://firesidecandles-strapi-production.up.railway.app/api/home?populate[featured_products][populate][0]=covers&populate=meta_data"
+    "https://firesidecandles-strapi-production.up.railway.app/api/home?populate[featured_products][populate][0]=covers&populate=meta_data&populate[featured_posts][populate][0]=covers"
   );
   const data = await res.json();
   return data;
@@ -37,7 +38,9 @@ export default async function Home() {
         <div className="my-16" />
         <Special />
         <div className="my-16" />
-        <Products data={data.attributes.featured_products} />
+        <Products products={data.attributes.featured_products} />
+        <div className="my-16" />
+        {/* <Posts posts={data.attributes.featured_products} /> */}
         <div className="my-16" />
         <Incentives />
         <div className="my-16" />

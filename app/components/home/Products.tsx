@@ -3,14 +3,14 @@ import { ProductData, Product } from "@/types/types";
 import { extractLastPhotos } from "@/lib/extractPhotos";
 import Image from "next/image";
 
-export default function Products({ data }: ProductData) {
+export default function Products({ products }: ProductData) {
   return (
     <div className="bg-white">
       <div className="mx-auto">
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {data.data?.map(({ attributes, id }: Product) => (
+          {products.data?.map(({ attributes, id }: Product) => (
             <div key={id} className="group relative">
-              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden shadow border transition bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                 <Image
                   src={extractLastPhotos(attributes.covers).url}
                   alt={extractLastPhotos(attributes.covers).alternativeText}
