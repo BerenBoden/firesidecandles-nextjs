@@ -1,6 +1,6 @@
-import Header from "../components/common/header/Header";
+import Header from "./components/common/header/Header";
 import { Dancing_Script } from "next/font/google";
-import Footer from "@/components/common/Footer";
+import Footer from "./components/common/Footer";
 import "./globals.css";
 
 export const metadata = {
@@ -23,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${dancingScript.variable}`}>
         <div className="z-10  relative">
+          {/* @ts-expect-error Server Component */}
           <Header />
         </div>
         <div className="h-36" />

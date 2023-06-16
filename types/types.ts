@@ -23,15 +23,6 @@ export type Category = {
   }[];
 };
 
-export type CategoryTag = {
-  data: CategoryTagData[];
-};
-
-export type CategoryTagData = {
-  id: number;
-  attributes: CategoryTagAttributes;
-};
-
 export type CategoryAttributes = {
   createdAt: string;
   updatedAt: string;
@@ -39,6 +30,16 @@ export type CategoryAttributes = {
   title: string;
   slug: string;
   category_tags: CategoryTag;
+};
+
+//CategoryTag
+export type CategoryTag = {
+  data: CategoryTagData[];
+};
+
+export type CategoryTagData = {
+  id: number;
+  attributes: CategoryTagAttributes;
 };
 
 export type CategoryTagAttributes = {
@@ -104,3 +105,28 @@ interface CoverData {
 export interface Cover {
   data: CoverData;
 }
+
+export interface Covers {
+  data: CoverData[];
+}
+
+//Product
+export type ProductAttributes = {
+  title: string;
+  slug: string;
+  price: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  covers: any;
+};
+
+export type Product = {
+  id: number;
+  attributes: ProductAttributes;
+};
+
+export type ProductData = {
+  data: { data: Product[] };
+};

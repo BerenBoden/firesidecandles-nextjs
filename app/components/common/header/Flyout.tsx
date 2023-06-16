@@ -5,7 +5,7 @@ import { classNames } from "@/lib/classNames";
 import { CategoryAttributes, CategoryTagAttributes, Page } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { extractLargestPhoto } from "@/lib/extractLargestPhoto";
+import { extractLargestPhoto } from "@/lib/extractPhotos";
 
 export default function Flyout({ data }: { data: Page }) {
   return (
