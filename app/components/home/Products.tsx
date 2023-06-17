@@ -13,7 +13,7 @@ export default function Products({ products }: ProductData) {
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden shadow border transition bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                 <Image
                   src={extractLastPhotos(attributes.covers).url}
-                  alt={extractLastPhotos(attributes.covers).alternativeText}
+                  alt={"d"}
                   width={500}
                   height={500}
                   className="h-full w-full object-cover object-center lg:h-full lg:w-full"

@@ -1,11 +1,11 @@
 "use client";
 import { Popover, Transition } from "@headlessui/react";
-import { Fragment } from "react";
 import { classNames } from "@/lib/classNames";
 import { CategoryAttributes, CategoryTagAttributes, Page } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { extractLargestPhoto } from "@/lib/extractPhotos";
+import { Fragment } from "react";
 
 export default function Flyout({ data }: { data: Page }) {
   return (
@@ -53,24 +53,23 @@ export default function Flyout({ data }: { data: Page }) {
                                 }: {
                                   attributes: CategoryAttributes;
                                 }) => (
-                                  <>
+                                  <Fragment key={attributes.slug}>
                                     {attributes.category_tags.data.map(
                                       ({
                                         attributes,
                                       }: {
                                         attributes: CategoryTagAttributes;
                                       }) => (
-                                        <>
+                                        <Fragment key={attributes.slug}>
                                           {attributes.feature?.data && (
-                                            <div>
-                                              <div
-                                                key={
-                                                  attributes.feature?.data
-                                                    ?.attributes?.category_tag
-                                                    ?.data.attributes.slug
-                                                }
-                                                className="group relative text-base sm:text-sm cursor-pointer shadow-sm"
-                                              >
+                                            <div
+                                              key={
+                                                attributes.feature?.data
+                                                  ?.attributes?.category_tag
+                                                  ?.data.attributes.slug
+                                              }
+                                            >
+                                              <div className="group relative text-base sm:text-sm cursor-pointer shadow-sm">
                                                 <div className=" bg-gray-100 group-hover:opacity-50 transition h-64">
                                                   <Image
                                                     src={
@@ -119,10 +118,10 @@ export default function Flyout({ data }: { data: Page }) {
                                               </div>
                                             </div>
                                           )}
-                                        </>
+                                        </Fragment>
                                       )
                                     )}
-                                  </>
+                                  </Fragment>
                                 )
                               )}
                             </div>

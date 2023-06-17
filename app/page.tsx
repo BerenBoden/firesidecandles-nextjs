@@ -3,8 +3,10 @@ import Showcase from "@/app/components/home/Showcase";
 import Special from "@/app/components/home/Special";
 import Products from "@/app/components/home/Products";
 import Posts from "@/app/components/home/Posts";
+import Testimonials from "@/app/components/home/Testimonials";
 import Incentives from "./components/home/Incentives";
 import { Metadata } from "next";
+import Image from "next/image";
 
 async function getHomePage() {
   const res = await fetch(
@@ -35,16 +37,33 @@ export default async function Home() {
       <div className="max-w-7xl mx-auto xl:px-0 px-8">
         <div className="my-16" />
         <Featured />
+      </div>
+      <div className="max-w-7xl mx-auto xl:px-0 px-8">
         <div className="my-16" />
         <Special />
+      </div>
+      <div className="max-w-7xl mx-auto xl:px-0 px-8">
         <div className="my-16" />
         <Products products={data.attributes.featured_products} />
+      </div>
+      <div className="relative">
+        <div className="absolute w-full h-full">
+          <Image src={"/banner4.jpg"} fill alt="background" />
+        </div>
+        <div className="max-w-7xl mx-auto xl:px-0 px-8">
+          <div className="my-16" />
+          <Testimonials />
+        </div>
+      </div>
+      <div className="max-w-7xl mx-auto xl:px-0 px-8">
         <div className="my-16" />
         {/* <Posts posts={data.attributes.featured_products} /> */}
+      </div>
+      <div className="max-w-7xl mx-auto xl:px-0 px-8">
         <div className="my-16" />
         <Incentives />
-        <div className="my-16" />
       </div>
+      <div className="my-16" />
     </>
   );
 }

@@ -40,7 +40,7 @@ export default function Posts({ posts }: any) {
             <div className="relative mt-8 flex items-center gap-x-4">
               <img
                 src={post.author.imageUrl}
-                alt=""
+                alt="sd"
                 className="h-10 w-10 rounded-full bg-gray-100"
               />
               <div className="text-sm leading-6">
