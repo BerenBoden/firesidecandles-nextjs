@@ -4,7 +4,7 @@ import Link from "next/link";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { classNames } from "@/lib/classNames";
 
-export default function MobileMenu({ data, open, setOpen }) {
+export default function MobileMenu({ data, open, setOpen }: any) {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -64,7 +64,7 @@ export default function MobileMenu({ data, open, setOpen }) {
                   </Tab.List>
                 </div>
                 <Tab.Panels as={Fragment}>
-                  {data.data.map(({ attributes }) => (
+                  {data.data.map(({ attributes }: any) => (
                     <Tab.Panel
                       key={attributes.slug}
                       className="space-y-10 px-4 pb-8 pt-10"
@@ -98,7 +98,7 @@ export default function MobileMenu({ data, open, setOpen }) {
                         </div>
                       ))} */}
                       </div>
-                      {attributes.categories.data.map(({ attributes }) => (
+                      {attributes.categories.data.map(({ attributes }: any) => (
                         <div key={attributes.title}>
                           <p
                             id={`${attributes.slug}-${attributes.slug}-heading-mobile`}
@@ -112,7 +112,7 @@ export default function MobileMenu({ data, open, setOpen }) {
                             className="mt-6 flex flex-col space-y-6"
                           >
                             {attributes.category_tags.data.map(
-                              ({ attributes }) => (
+                              ({ attributes }: any) => (
                                 <li
                                   key={attributes.title}
                                   className="flow-root"
