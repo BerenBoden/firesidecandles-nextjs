@@ -7,10 +7,11 @@ import Testimonials from "@/app/components/home/Testimonials";
 import Incentives from "./components/home/Incentives";
 import { Metadata } from "next";
 import Image from "next/image";
+import { Home } from "@/types/types";
 
-async function getHomePage() {
+async function getHomePage(): Promise<Home> {
   const res = await fetch(
-    "https://firesidecandles-strapi-production.up.railway.app/api/home?populate[featured_products][populate][0]=covers&populate=meta_data&populate[featured_posts][populate][0]=covers"
+    "https://firesidecandles-strapi-production.up.railway.app/api/home?populate[featured_products][populate][0]=covers&populate=meta_data&populate[call_to_action][populate][0]=cover"
   );
   const data = await res.json();
   return data;
@@ -21,7 +22,7 @@ export async function generateMetadata() {
 
   const metadata: Metadata = {
     title: data.attributes.meta_data.meta_title,
-    description: data.attributes.meta_data.description,
+    description: data.attributes.meta_data.meta_description,
     robots: `${
       data.attributes.meta_data.indexed ? "FOLLOW, INDEX" : "NOFOLLOW, NOINDEX"
     }`,
@@ -33,7 +34,8 @@ export default async function Home() {
   const { data } = await getHomePage();
   return (
     <>
-      <Showcase />
+      <Showcase data={data.attributes.call_to_action} />
+
       <div className="max-w-7xl mx-auto xl:px-0 px-8">
         <div className="my-16" />
         <Featured />
@@ -44,7 +46,7 @@ export default async function Home() {
       </div>
       <div className="max-w-7xl mx-auto xl:px-0 px-8">
         <div className="my-16" />
-        <Products products={data.attributes.featured_products} />
+        <Products data={data.attributes.featured_products.data} />
       </div>
       <div className="relative">
         <div className="absolute w-full h-full">

@@ -127,6 +127,41 @@ export type Product = {
   attributes: ProductAttributes;
 };
 
-export type ProductData = {
-  products: { data: Product[] };
+export type Products = {
+  data: Product[];
 };
+
+//Showcase
+export type Home = {
+  data: {
+    id: number;
+    attributes: HomeAttributes;
+  };
+};
+
+export type HomeAttributes = {
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  featured_products: Products;
+  meta_data: MetaData;
+  call_to_action: CallToAction;
+};
+
+export type MetaData = {
+  id: number;
+  meta_title: string;
+  meta_description: string;
+  indexed: boolean;
+};
+
+export type CallToAction = {
+  id: number;
+  short_heading: string;
+  large_heading: string;
+  short_description: string;
+  button_text: string;
+  cover: CoverData;
+};
+
+export type CallToActionData = CallToAction[];

@@ -14,7 +14,7 @@ async function getNavigation(): Promise<Page> {
 export default async function Header() {
   const NavigationData = await getNavigation();
   return (
-    <header className="bg-white fixed w-full ">
+    <header className="bg-white fixed w-full h-38">
       <div className="flex max-w-7xl items-center justify-between py-6 mx-auto px-8 xl:px-0">
         <Link href="/">
           <h1 className="font-dancing text-3xl">firesidecandles</h1>

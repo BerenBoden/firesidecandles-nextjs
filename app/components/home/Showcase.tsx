@@ -1,16 +1,13 @@
 "use client";
-import { useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import CallToAction from "../common/elements/CallToAction";
 import Autoplay from "embla-carousel-autoplay";
+import { CallToActionData } from "@/types/types";
 
-export default function Showcase() {
-  const data = [
-    { text: "test1", image: "/banner1.jpg" },
-    { text: "test2", image: "/banner2.jpg" },
-    { text: "test3", image: "/banner3.jpg" },
-  ];
-  const [emblaRef] = useEmblaCarousel({ loop: true });
+export default function Showcase(data: any) {
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 4000 }),
+  ]);
 
   return (
     <div
@@ -18,8 +15,8 @@ export default function Showcase() {
       ref={emblaRef}
     >
       <div className="embla__container h-full">
-        {data.map(({ text, image }) => {
-          return <CallToAction key={text} text={text} image={image} />;
+        {data.data.map((props: any) => {
+          return <CallToAction {...props} />;
         })}
       </div>
     </div>

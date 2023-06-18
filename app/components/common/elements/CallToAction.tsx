@@ -1,13 +1,9 @@
 import Image from "next/image";
 import Button from "@/app/components/common/elements/Button";
+import { CallToAction } from "@/types/types";
+import { extractLargestPhoto } from "@/lib/extractPhotos";
 
-export default function CallToAction({
-  text,
-  image,
-}: {
-  text: string;
-  image: string;
-}) {
+export default function CallToAction(props: any) {
   return (
     <div className="embla__slide">
       <div className="relative h-full">
@@ -16,18 +12,17 @@ export default function CallToAction({
             <div className="flex flex-col h-full justify-evenly">
               <div className="">
                 <h3 className="font-dancing text-lg text-center text-brown-600">
-                  This weekend only
+                  {props.short_heading}
                 </h3>
               </div>
               <div className="">
                 <h1 className="text-xs md:text-lg lg:text-4xl 2xl:text-4xl xl:text-4xl text-center text-black">
-                  {text}
+                  {props.large_heading}
                 </h1>
               </div>
               <div className="">
-                <h3 className="font-dancing text-xs md:text-lg lg:text-lg 2xl:text-lg xl:text-lg text-center text-brown-600">
-                  Excape the mundane and restore your energy with our new
-                  collection.
+                <h3 className="text-md text-center text-brown-600">
+                  {props.short_description}
                 </h3>
               </div>
               <Button text="Shop now" />
@@ -35,7 +30,7 @@ export default function CallToAction({
           </div>
         </div>
         <Image
-          src={image}
+          src={extractLargestPhoto(props.cover).url}
           alt="banner"
           layout="responsive"
           width={500} // replace with your image width
