@@ -11,7 +11,7 @@ import { Home } from "@/types/types";
 
 async function getHomePage(): Promise<Home> {
   const res = await fetch(
-    "https://firesidecandles-strapi-production.up.railway.app/api/home?populate[featured_products][populate][0]=covers&populate=meta_data&populate[call_to_action][populate][0]=cover"
+    "https://firesidecandles-strapi-production.up.railway.app/api/home?populate[featured_products][populate][0]=covers&populate=meta_data&populate[call_to_action][populate][0]=cover&populate[features][populate][0]=cover"
   );
   const data = await res.json();
   return data;
@@ -34,11 +34,12 @@ export default async function Home() {
   const { data } = await getHomePage();
   return (
     <>
-      <Showcase data={data.attributes.call_to_action} />
-
+      <div className="w-full">
+        <Showcase data={data.attributes.call_to_action} />
+      </div>
       <div className="max-w-7xl mx-auto xl:px-0 px-8">
         <div className="my-16" />
-        <Featured />
+        <Featured data={data.attributes.features.data} />
       </div>
       <div className="max-w-7xl mx-auto xl:px-0 px-8">
         <div className="my-16" />

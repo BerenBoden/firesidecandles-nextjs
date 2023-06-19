@@ -62,13 +62,7 @@ export default function Flyout({ data }: { data: Page }) {
                                       }) => (
                                         <Fragment key={attributes.slug}>
                                           {attributes.feature?.data && (
-                                            <div
-                                              key={
-                                                attributes.feature?.data
-                                                  ?.attributes?.category_tag
-                                                  ?.data.attributes.slug
-                                              }
-                                            >
+                                            <div key={attributes.slug}>
                                               <div className="group relative text-base sm:text-sm cursor-pointer shadow-sm">
                                                 <div className=" bg-gray-100 group-hover:opacity-50 transition h-64">
                                                   <Image

@@ -48,7 +48,7 @@ export type CategoryTagAttributes = {
   publishedAt: string;
   title: string;
   slug: string;
-  feature: any;
+  feature: Feature;
 };
 
 //Image
@@ -145,6 +145,7 @@ export type HomeAttributes = {
   publishedAt: string;
   featured_products: Products;
   meta_data: MetaData;
+  features: Features;
   call_to_action: CallToAction;
 };
 
@@ -165,3 +166,26 @@ export type CallToAction = {
 };
 
 export type CallToActionData = CallToAction[];
+
+//Feature
+export type Features = { data: FeaturesData[] };
+
+export type Feature = {
+  data: {
+    id: number;
+    attributes: FeatureAttributes;
+  };
+};
+
+export type FeaturesData = {
+  id: number;
+  attributes: FeatureAttributes;
+};
+
+type FeatureAttributes = {
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  cover: Cover;
+  category_tag: { data: CategoryTagData };
+};
