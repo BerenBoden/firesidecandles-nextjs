@@ -12,7 +12,7 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: {
+        identifier: {
           label: "Email",
           type: "email",
           placeholder: "example@example.com",
@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials: any) {
         const { user, jwt } = await axios
           .post(`http://localhost:1337/api/auth/local`, {
-            identifier: credentials.email,
+            identifier: credentials.identifier,
             password: credentials.password,
           })
           .then(({ data }) => {

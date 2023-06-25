@@ -10,32 +10,30 @@ export default function Login() {
     setError,
     formState: { errors },
   } = useForm({
+    shouldUnregister: true,
     defaultValues: {
-      email: "",
+      identifier: "",
       password: "",
     },
   });
-
   const onSubmit = async (data: any) => {
-    try {
-      const response = await signIn("credentials", {
-        redirect: false,
-        ...data,
-      });
-      console.log(response);
-    } catch (error: any) {
-      console.log(error);
-      if (!Array.isArray(error.data.error.details.errors)) {
-        setError("email", {
+    const response: any = await signIn("credentials", {
+      redirect: false,
+      ...data,
+    });
+    const error = JSON.parse(response.error);
+    if (error) {
+      if (!Array.isArray(error.error.details.errors)) {
+        setError("identifier", {
           type: "manual",
-          message: error.data.error,
+          message: error.error,
         });
         setError("password", {
           type: "manual",
-          message: error.data.error,
+          message: error.error,
         });
       } else {
-        error.data.error.details.errors.map((error: any) => {
+        error.error.details.errors.map((error: any) => {
           setError(error.path.join("."), {
             type: "manual",
             message: error.message,
@@ -44,7 +42,6 @@ export default function Login() {
       }
     }
   };
-  console.log(errors);
   return (
     <>
       <div className="flex min-h-full flex-1 max-w-7xl mx-auto xl:px-0 px-8 my-12">
@@ -68,27 +65,40 @@ export default function Login() {
             <div>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
+                  {/* {errors.identifier} */}
                   <label
-                    htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    htmlFor="identifier"
+                    className={`block text-sm font-medium leading-6 text-gray-900 ${
+                      errors.identifier ? "text-red-500" : ""
+                    }`}
                   >
                     Email address
                   </label>
                   <div className="mt-2">
                     <input
-                      id="email"
-                      {...register("email")}
-                      name="email"
-                      autoComplete="email"
-                      className="block w-full border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      id="identifier"
+                      {...register("identifier")}
+                      name="identifier"
+                      className={`block w-full  p-2 border shadow-sm placeholder:text-gray-400  sm:text-sm sm:leading-6 ${
+                        errors.identifier ? "border-red-500" : ""
+                      }`}
                     />
+                    <p
+                      className={`capitalize text-xs italic mt-2 text-red-500 ${
+                        errors.identifier ? "visible" : "invisible"
+                      }`}
+                    >
+                      password is incorrect
+                    </p>
                   </div>
                 </div>
 
                 <div>
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className={`block text-sm font-medium leading-6 text-gray-900 ${
+                      errors.password ? "text-red-500" : ""
+                    }`}
                   >
                     Password
                   </label>
@@ -97,10 +107,17 @@ export default function Login() {
                       id="password"
                       {...register("password")}
                       name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      className="block w-full border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className={`block w-full p-2 border shadow-sm placeholder:text-gray-400  sm:text-sm sm:leading-6 ${
+                        errors.password ? "border-red-500" : ""
+                      }`}
                     />
+                    <p
+                      className={`capitalize text-xs italic mt-2 text-red-500 ${
+                        errors.password ? "visible" : "invisible"
+                      }`}
+                    >
+                      password is incorrect
+                    </p>
                   </div>
                 </div>
 
