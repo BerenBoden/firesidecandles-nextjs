@@ -1,7 +1,14 @@
-export default function Button({ text }: { text: string }) {
+import { Button } from "@/types/types";
+import Link from "next/link";
+
+export default function Button(props: Button) {
   return (
-    <button className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
-      {text}
-    </button>
+    <Link href={`${props.link}`} onClick={props.onClick}>
+      <button
+        className={`inline-block border font-thin py-2 px-4 shadow-sm border bg-white text-black hover:bg-black hover:text-white transition ${props.classes}`}
+      >
+        {props.children}
+      </button>
+    </Link>
   );
 }

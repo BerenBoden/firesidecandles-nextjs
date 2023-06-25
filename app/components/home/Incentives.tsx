@@ -5,19 +5,19 @@ const incentives = [
     name: "Free shipping",
     imageSrc: "/shipping-icon.svg",
     description:
-      "It's not actually free we just price it into the products. Someone's paying for it, and it's not us.",
+      "Free shipping on orders over $100.",
   },
   {
     name: "10-year warranty",
     imageSrc: "/warranty-icon.svg",
     description:
-      "If it breaks in the first 10 years we'll replace it. After that you're on your own though.",
+      "If it breaks in the first 10 years we'll replace it.",
   },
   {
     name: "Exchanges",
     imageSrc: "/exchange-icon.svg",
     description:
-      "If you don't like it, trade it to one of your friends for something of theirs. Don't send it here though.",
+      "If you don't like it, trade it to one of your friends for something of theirs.",
   },
 ];
 

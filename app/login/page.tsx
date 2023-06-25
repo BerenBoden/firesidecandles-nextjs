@@ -1,6 +1,50 @@
+"use client";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (data: any) => {
+    try {
+      const response = await signIn("credentials", {
+        redirect: false,
+        ...data,
+      });
+      console.log(response);
+    } catch (error: any) {
+      console.log(error);
+      if (!Array.isArray(error.data.error.details.errors)) {
+        setError("email", {
+          type: "manual",
+          message: error.data.error,
+        });
+        setError("password", {
+          type: "manual",
+          message: error.data.error,
+        });
+      } else {
+        error.data.error.details.errors.map((error: any) => {
+          setError(error.path.join("."), {
+            type: "manual",
+            message: error.message,
+          });
+        });
+      }
+    }
+  };
+  console.log(errors);
   return (
     <>
       <div className="flex min-h-full flex-1 max-w-7xl mx-auto xl:px-0 px-8 my-12">
@@ -22,7 +66,7 @@ export default function Login() {
 
           <div className="mt-10">
             <div>
-              <form action="#" method="POST" className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
                   <label
                     htmlFor="email"
@@ -33,10 +77,9 @@ export default function Login() {
                   <div className="mt-2">
                     <input
                       id="email"
+                      {...register("email")}
                       name="email"
-                      type="email"
                       autoComplete="email"
-                      required
                       className="block w-full border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -52,10 +95,10 @@ export default function Login() {
                   <div className="mt-2">
                     <input
                       id="password"
+                      {...register("password")}
                       name="password"
                       type="password"
                       autoComplete="current-password"
-                      required
                       className="block w-full border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>

@@ -20,7 +20,7 @@ export default function Featured({ data }: Features) {
               width={1000}
               height={800}
               src={extractLargestPhoto(attributes.cover).url}
-              className="object-cover h-56 "
+              className="object-cover h-56 border shadow-sm"
             />
           </div>
         ))}

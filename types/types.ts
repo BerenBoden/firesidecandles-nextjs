@@ -189,3 +189,11 @@ type FeatureAttributes = {
   cover: Cover;
   category_tag: { data: CategoryTagData };
 };
+
+//Button
+export type Button = {
+  classes?: string;
+  children: string;
+  onClick: () => void;
+  link?: string;
+};
