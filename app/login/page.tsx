@@ -22,16 +22,16 @@ type Errors = {
 interface ErrorOption {
   type: string;
   message: any;
-  path: string[];
+  path: [string];
 }
 
 interface ErrorDetail {
   message: string;
-  path: string[];
+  path: any;
 }
 
-interface SignInResponse {
-  error: any;
+interface LoginResponse {
+  error: string;
 }
 
 export default function Login() {
@@ -54,7 +54,6 @@ export default function Login() {
       ...data,
     });
     const error: Errors = JSON.parse(response.error);
-    console.log(error);
     if (error) {
       if (!Array.isArray(error.error.details.errors)) {
         setError("identifier", {
@@ -67,7 +66,7 @@ export default function Login() {
         } as ErrorOption);
       } else {
         error.error.details.errors.map((error: ErrorDetail) => {
-          setError("identifier", {
+          setError(error.path.join("."), {
             type: "manual",
             message: error.message,
           });
@@ -75,7 +74,6 @@ export default function Login() {
       }
     }
   };
-  console.log(errors);
   return (
     <>
       <div className="flex min-h-full flex-1 max-w-7xl mx-auto xl:px-0 px-8 my-12">

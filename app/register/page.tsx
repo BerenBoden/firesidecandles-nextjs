@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import Button from "../components/common/elements/Button";
+
 
 export default function Register() {
   return (
@@ -9,47 +12,71 @@ export default function Register() {
             <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
               Register for an account
             </h2>
-            <p className="text-xs text-gray-600">Register today and get 15% off your first order.</p>
+            <p className="text-xs text-gray-600">
+              Register today and get 15% off your first order.
+            </p>
           </div>
 
           <div className="mt-10">
             <div>
-              <form action="#" method="POST" className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
                   <label
-                    htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    htmlFor="identifier"
+                    className={`block text-sm font-medium leading-6 text-gray-900 ${
+                      errors.identifier ? "text-red-500" : ""
+                    }`}
                   >
                     Email address
                   </label>
                   <div className="mt-2">
                     <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      className="block w-full border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      id="identifier"
+                      {...register("identifier")}
+                      name="identifier"
+                      className={`block w-full  p-2 border shadow-sm placeholder:text-gray-400  sm:text-sm sm:leading-6 ${
+                        errors.identifier ? "border-red-500" : ""
+                      }`}
                     />
+                    <p
+                      className={`h-4 capitalize text-xs italic mt-2 text-red-500 ${
+                        errors.identifier ? "visible" : "invisible"
+                      }`}
+                    >
+                      {typeof errors.identifier?.message === "object"
+                        ? (errors.identifier?.message as { message: string })
+                            .message
+                        : errors.identifier?.message}
+                    </p>
                   </div>
                 </div>
 
                 <div>
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className={`block text-sm font-medium leading-6 text-gray-900 ${
+                      errors.password ? "text-red-500" : ""
+                    }`}
                   >
                     Password
                   </label>
                   <div className="mt-2">
                     <input
                       id="password"
+                      {...register("password")}
                       name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      required
-                      className="block w-full border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className={`block w-full p-2 border shadow-sm placeholder:text-gray-400  sm:text-sm sm:leading-6 ${
+                        errors.password ? "border-red-500" : ""
+                      }`}
                     />
+                    <p
+                      className={` h-4 capitalize text-xs italic mt-2 text-red-500 ${
+                        errors.password ? "visible" : "invisible"
+                      }`}
+                    >
+                      {typeof errors.password?.message === "string" &&
+                        errors.password?.message}
+                    </p>
                   </div>
                 </div>
 
@@ -59,7 +86,7 @@ export default function Register() {
                       id="remember-me"
                       name="remember-me"
                       type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      className="h-4 w-4 border-gray-300 text-black focus:ring-gray-500"
                     />
                     <label
                       htmlFor="remember-me"
@@ -72,7 +99,7 @@ export default function Register() {
                   <div className="text-sm leading-6">
                     <a
                       href="#"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500"
+                      className="font-semibold text-black hover:text-gray-500"
                     >
                       Forgot password?
                     </a>
@@ -80,12 +107,12 @@ export default function Register() {
                 </div>
 
                 <div>
-                  <button
+                  <Button
                     type="submit"
-                    className="flex w-full justify-center bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="flex w-full justify-center px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-white hover:text-black border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Sign in
-                  </button>
+                  </Button>
                 </div>
               </form>
             </div>
