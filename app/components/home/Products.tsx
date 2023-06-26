@@ -22,12 +22,8 @@ export default function Products(data: Products) {
                 />
               </div>
               <div className="w-full flex">
-                <Button classes="w-1/2" link={`/shop/${attributes.slug}`}>
-                  Cart
-                </Button>
-                <Button classes="w-1/2" link={`/shop/${attributes.slug}`}>
-                  Wishlist
-                </Button>
+                <Button className="w-1/2">Cart</Button>{" "}
+                <Button className="w-1/2">Wishlist</Button>
               </div>
               <div className="mt-4 flex justify-between">
                 <div>

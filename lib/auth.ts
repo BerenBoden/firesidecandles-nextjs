@@ -20,17 +20,20 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials: any) {
         const { user, jwt } = await axios
-          .post(`http://localhost:1337/api/auth/local`, {
-            identifier: credentials.identifier,
-            password: credentials.password,
-          })
+          .post(
+            `https://firesidecandles-strapi-production.up.railway.app/api/auth/local`,
+            {
+              identifier: credentials.identifier,
+              password: credentials.password,
+            }
+          )
           .then(({ data }) => {
             return data;
           })
           .catch((error) => {
             throw new Error(JSON.stringify(error.response.data));
           });
-          
+
         return { jwt, ...user };
       },
     }),
