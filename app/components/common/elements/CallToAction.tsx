@@ -25,10 +25,7 @@ export default function CallToAction(props: any) {
                   {props.short_description}
                 </h3>
               </div>
-              <Button
-                link={""}
-                classes="w-full bg-amber-900 text-white hover:bg-amber-950"
-              >
+              <Button className="w-full bg-amber-900 text-white hover:bg-amber-950">
                 Shop now
               </Button>
             </div>

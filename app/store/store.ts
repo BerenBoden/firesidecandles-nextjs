@@ -1,12 +1,12 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./slices/authReducer";
+import cartReducer from "./slices/cartReducer";
 import { api } from "./api";
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    auth: cartReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>

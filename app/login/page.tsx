@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
-import { useForm, FieldError } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import Button from "../components/common/elements/Button";
+import { useRouter } from "next/navigation";
 
 type FormData = {
   identifier: string;
@@ -30,11 +31,9 @@ interface ErrorDetail {
   path: any;
 }
 
-interface LoginResponse {
-  error: string;
-}
-
 export default function Login() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -49,6 +48,9 @@ export default function Login() {
   });
 
   const onSubmit = async (data: FormData) => {
+    {
+      /**Todo: Make type for login response */
+    }
     const response: any = await signIn("credentials", {
       redirect: false,
       ...data,
@@ -72,6 +74,8 @@ export default function Login() {
           });
         });
       }
+    } else {
+      router.push("/dashboard");
     }
   };
   return (
@@ -84,12 +88,12 @@ export default function Login() {
             </h2>
             <p className="mt-2 text-sm leading-6 text-gray-500">
               Not a member?{" "}
-              <a
-                href="#"
+              <Link
+                href="/register"
                 className="font-semibold text-black hover:text-gray-500"
               >
-                Sign up and get 15% off your first order.
-              </a>
+                Sign up and get 10% off your first order.
+              </Link>
             </p>
           </div>
 

@@ -6,7 +6,7 @@ import Button from "../components/common/elements/Button";
 export default function Register() {
   return (
     <>
-      <div className="flex min-h-full flex-1 max-w-7xl mx-auto xl:px-0 px-8 my-12">
+      {/* <div className="flex min-h-full flex-1 max-w-7xl mx-auto xl:px-0 px-8 my-12">
         <div className="mx-auto w-1/2">
           <div>
             <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -185,7 +185,7 @@ export default function Register() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

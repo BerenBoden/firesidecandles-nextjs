@@ -4,7 +4,14 @@ const cookies = new Cookies();
 const user = cookies.get("user");
 const token = cookies.get("token");
 
-const initialState = {
+type InitialState = {
+  isAuthenticated: boolean;
+  user: any;
+  token: string | null;
+  admin: boolean;
+};
+
+const initialState: InitialState = {
   isAuthenticated: false,
   user: user ? user : null,
   token: token ? token : null,
