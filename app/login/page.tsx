@@ -1,7 +1,38 @@
 "use client";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useForm, FieldError } from "react-hook-form";
 import { signIn } from "next-auth/react";
+import Button from "../components/common/elements/Button";
+
+type FormData = {
+  identifier: string;
+  password: string;
+};
+
+type Errors = {
+  data: any;
+  error: {
+    details: {
+      errors: ErrorOption[];
+      message: any;
+    };
+  };
+};
+
+interface ErrorOption {
+  type: string;
+  message: any;
+  path: string[];
+}
+
+interface ErrorDetail {
+  message: string;
+  path: string[];
+}
+
+interface SignInResponse {
+  error: any;
+}
 
 export default function Login() {
   const {
@@ -9,32 +40,34 @@ export default function Login() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     shouldUnregister: true,
     defaultValues: {
       identifier: "",
       password: "",
     },
   });
-  const onSubmit = async (data: any) => {
+
+  const onSubmit = async (data: FormData) => {
     const response: any = await signIn("credentials", {
       redirect: false,
       ...data,
     });
-    const error = JSON.parse(response.error);
+    const error: Errors = JSON.parse(response.error);
+    console.log(error);
     if (error) {
       if (!Array.isArray(error.error.details.errors)) {
         setError("identifier", {
           type: "manual",
           message: error.error,
-        });
+        } as ErrorOption);
         setError("password", {
           type: "manual",
           message: error.error,
-        });
+        } as ErrorOption);
       } else {
-        error.error.details.errors.map((error: any) => {
-          setError(error.path.join("."), {
+        error.error.details.errors.map((error: ErrorDetail) => {
+          setError("identifier", {
             type: "manual",
             message: error.message,
           });
@@ -42,6 +75,7 @@ export default function Login() {
       }
     }
   };
+  console.log(errors);
   return (
     <>
       <div className="flex min-h-full flex-1 max-w-7xl mx-auto xl:px-0 px-8 my-12">
@@ -54,7 +88,7 @@ export default function Login() {
               Not a member?{" "}
               <a
                 href="#"
-                className="font-semibold text-indigo-600 hover:text-indigo-500"
+                className="font-semibold text-black hover:text-gray-500"
               >
                 Sign up and get 15% off your first order.
               </a>
@@ -65,7 +99,6 @@ export default function Login() {
             <div>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
-                  {/* {errors.identifier} */}
                   <label
                     htmlFor="identifier"
                     className={`block text-sm font-medium leading-6 text-gray-900 ${
@@ -84,11 +117,14 @@ export default function Login() {
                       }`}
                     />
                     <p
-                      className={`capitalize text-xs italic mt-2 text-red-500 ${
+                      className={`h-4 capitalize text-xs italic mt-2 text-red-500 ${
                         errors.identifier ? "visible" : "invisible"
                       }`}
                     >
-                      password is incorrect
+                      {typeof errors.identifier?.message === "object"
+                        ? (errors.identifier?.message as { message: string })
+                            .message
+                        : errors.identifier?.message}
                     </p>
                   </div>
                 </div>
@@ -112,11 +148,12 @@ export default function Login() {
                       }`}
                     />
                     <p
-                      className={`capitalize text-xs italic mt-2 text-red-500 ${
+                      className={` h-4 capitalize text-xs italic mt-2 text-red-500 ${
                         errors.password ? "visible" : "invisible"
                       }`}
                     >
-                      password is incorrect
+                      {typeof errors.password?.message === "string" &&
+                        errors.password?.message}
                     </p>
                   </div>
                 </div>
@@ -127,7 +164,7 @@ export default function Login() {
                       id="remember-me"
                       name="remember-me"
                       type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                      className="h-4 w-4 border-gray-300 text-black focus:ring-gray-500"
                     />
                     <label
                       htmlFor="remember-me"
@@ -140,7 +177,7 @@ export default function Login() {
                   <div className="text-sm leading-6">
                     <a
                       href="#"
-                      className="font-semibold text-indigo-600 hover:text-indigo-500"
+                      className="font-semibold text-black hover:text-gray-500"
                     >
                       Forgot password?
                     </a>
@@ -148,12 +185,12 @@ export default function Login() {
                 </div>
 
                 <div>
-                  <button
+                  <Button
                     type="submit"
-                    className="flex w-full justify-center bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    className="flex w-full justify-center px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-white hover:text-black border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     Sign in
-                  </button>
+                  </Button>
                 </div>
               </form>
             </div>
@@ -168,7 +205,7 @@ export default function Login() {
                 </div>
                 <div className="relative flex justify-center text-sm font-medium leading-6">
                   <span className="bg-white px-6 text-gray-900">
-                    Or continue with
+                    or continue with
                   </span>
                 </div>
               </div>
