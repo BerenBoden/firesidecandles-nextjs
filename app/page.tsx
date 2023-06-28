@@ -5,9 +5,11 @@ import Products from "@/app/components/home/Products";
 import Posts from "@/app/components/home/Posts";
 import Testimonials from "@/app/components/home/Testimonials";
 import Incentives from "./components/home/Incentives";
+import Header from "./components/common/header/Header";
 import { Metadata } from "next";
 import Image from "next/image";
 import { Home } from "@/types/types";
+import { Page } from "@/types/types";
 
 async function getHomePage(): Promise<Home> {
   const res = await fetch(
@@ -32,6 +34,7 @@ export async function generateMetadata() {
 
 export default async function Home() {
   const { data } = await getHomePage();
+  
   return (
     <>
       <div className="w-full">

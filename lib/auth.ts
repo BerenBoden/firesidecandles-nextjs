@@ -19,14 +19,14 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
-        const { user, jwt } = await axios
-          .post(
-            `https://firesidecandles-strapi-production.up.railway.app/api/auth/local`,
-            {
-              identifier: credentials.identifier,
-              password: credentials.password,
-            }
-          )
+        const {
+          user: { email, username: name, id },
+          jwt,
+        } = await axios
+          .post(`http://localhost:1337/api/auth/local`, {
+            identifier: credentials.identifier,
+            password: credentials.password,
+          })
           .then(({ data }) => {
             return data;
           })
@@ -34,8 +34,18 @@ export const authOptions: NextAuthOptions = {
             throw new Error(JSON.stringify(error.response.data));
           });
 
-        return { jwt, ...user };
+        return { jwt, email, name, id };
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      // console.log(token, user, account);
+      return { ...token, ...user };
+    },
+    async session({ session, token, user }) {
+      // console.log(session, token, user);
+      return { ...session, ...token, ...user };
+    },
+  },
 };

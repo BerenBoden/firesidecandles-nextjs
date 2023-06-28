@@ -1,3 +1,4 @@
+"use client";
 import { Fragment } from "react";
 import { Transition, Dialog, Tab } from "@headlessui/react";
 import Link from "next/link";

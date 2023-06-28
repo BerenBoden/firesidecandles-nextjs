@@ -5,5 +5,6 @@ import { authOptions } from "@/lib/auth";
 export default async function Page() {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/login");
+  console.log(session.jwt);
   return <div>page</div>;
 }

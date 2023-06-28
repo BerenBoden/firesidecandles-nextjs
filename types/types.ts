@@ -197,3 +197,23 @@ export type Button = {
   onClick: () => void;
   link?: string;
 };
+
+//next-auth
+declare module "next-auth" {
+  interface Session {
+    user: {
+      name: string;
+      email: string;
+      image: string;
+    };
+    name: string;
+    email: string;
+    image: string;
+    sub: string;
+    iat: number;
+    exp: number;
+    jti: string;
+    jwt: string;
+    id: number;
+  }
+}

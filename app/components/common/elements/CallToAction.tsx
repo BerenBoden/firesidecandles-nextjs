@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Button from "@/app/components/common/elements/Button";
 import { CallToAction } from "@/types/types";

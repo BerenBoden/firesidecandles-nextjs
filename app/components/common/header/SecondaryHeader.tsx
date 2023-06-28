@@ -10,9 +10,12 @@ import {
 import Flyout from "./Flyout";
 import MobileMenu from "./MobileMenu";
 import { Page } from "@/types/types";
+import { useSession } from "next-auth/react";
 
 export default function SecondaryHeader(data: Page) {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
+
   return (
     <div className="bg-white px-8 xl:px-0">
       {/* Mobile menu */}
@@ -32,8 +35,17 @@ export default function SecondaryHeader(data: Page) {
               </button>
               {/* Flyout menus */}
               <Flyout data={data} />
-
-              <div className="ml-auto flex items-center">
+              {session ? (
+                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                  <Link
+                    href="/dashboard"
+                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                  >
+                    My Account
+                  </Link>
+                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                </div>
+              ) : (
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   <Link
                     href="/login"
@@ -49,6 +61,8 @@ export default function SecondaryHeader(data: Page) {
                     Create account
                   </Link>
                 </div>
+              )}
+              <div className="ml-auto flex items-center">
                 {/* Search */}
                 <div className="lg:hidden flex lg:ml-6">
                   <Link

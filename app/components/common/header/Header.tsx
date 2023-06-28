@@ -1,18 +1,10 @@
+"use client";
 import { Page } from "@/types/types";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import SecondaryHeader from "./SecondaryHeader";
 
-async function getNavigation(): Promise<Page> {
-  const res = await fetch(
-    "https://firesidecandles-strapi-production.up.railway.app/api/pages?sort=id&populate[categories][populate][category_tags][populate][feature][populate][0]=cover,category_tag"
-  );
-  const navigation = await res.json();
-  return navigation;
-}
-
-export default async function Header() {
-  const NavigationData = await getNavigation();
+export default function Header({ data }: { data: Page }) {
   return (
     <header className="bg-white fixed w-full h-38">
       <div className="flex max-w-7xl items-center justify-between py-6 mx-auto px-8 xl:px-0">
@@ -43,7 +35,7 @@ export default async function Header() {
         </div>
       </div>
       <div className="border-b" />
-      <SecondaryHeader {...NavigationData} />
+      <SecondaryHeader {...data} />
     </header>
   );
 }
