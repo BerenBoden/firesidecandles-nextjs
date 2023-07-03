@@ -1,10 +1,10 @@
 "use client";
 import { Popover, Transition } from "@headlessui/react";
-import { classNames } from "@/lib/classNames";
+import { classNames } from "@/utils/classNames";
 import { CategoryAttributes, CategoryTagAttributes, Page } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { extractLargestPhoto } from "@/lib/extractPhotos";
+import { extractLargestPhoto } from "@/utils/extractPhotos";
 import { Fragment } from "react";
 
 export default function Flyout({ data }: { data: Page }) {

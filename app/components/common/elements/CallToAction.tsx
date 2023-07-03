@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Button from "@/app/components/common/elements/Button";
 import { CallToAction } from "@/types/types";
-import { extractLargestPhoto } from "@/lib/extractPhotos";
+import { extractLargestPhoto } from "@/utils/extractPhotos";
 
 export default function CallToAction(props: any) {
   return (

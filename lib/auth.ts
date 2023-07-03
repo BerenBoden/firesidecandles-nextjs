@@ -20,7 +20,8 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials: any) {
         const {
-          user: { email, username: name, id, refreshToken },
+          refreshToken,
+          user: { email, username: name, id },
           jwt,
         } = await axios
           .post(`http://localhost:1337/api/auth/local`, {
@@ -40,10 +41,10 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
+      console.log(token, user);
       return { ...token, ...user };
     },
     async session({ session, token, user }) {
-      console.log(session)
       return { ...session, ...token, ...user };
     },
   },

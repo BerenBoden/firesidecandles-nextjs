@@ -34,21 +34,21 @@ export async function generateMetadata() {
 
 export default async function Home() {
   const { data } = await getHomePage();
-  
+
   return (
     <>
       <div className="w-full">
         <Showcase data={data.attributes.call_to_action} />
       </div>
-      <div className="max-w-7xl mx-auto xl:px-0 px-8">
+      <div className="max-w-7xl mx-auto 2xl:px-8 xl:px-8 lg:px-8 md:px-8 px-2">
         <div className="my-16" />
         <Featured data={data.attributes.features.data} />
       </div>
-      <div className="max-w-7xl mx-auto xl:px-0 px-8">
+      <div className="max-w-7xl mx-auto 2xl:px-8 xl:px-8 lg:px-8 md:px-8 px-2">
         <div className="my-16" />
         <Special />
       </div>
-      <div className="max-w-7xl mx-auto xl:px-0 px-8">
+      <div className="max-w-7xl mx-auto 2xl:px-8 xl:px-8 lg:px-8 md:px-8 px-2">
         <div className="my-16" />
         <Products data={data.attributes.featured_products.data} />
       </div>
@@ -56,16 +56,16 @@ export default async function Home() {
         <div className="absolute w-full h-full">
           <Image src={"/banner4.jpg"} fill alt="background" />
         </div>
-        <div className="max-w-7xl mx-auto xl:px-0 px-8">
+        <div className="max-w-7xl mx-auto 2xl:px-8 xl:px-8 lg:px-8 md:px-8 px-2">
           <div className="my-16" />
           <Testimonials />
         </div>
       </div>
-      <div className="max-w-7xl mx-auto xl:px-0 px-8">
+      <div className="max-w-7xl mx-auto 2xl:px-8 xl:px-8 lg:px-8 md:px-8 px-2">
         <div className="my-16" />
         {/* <Posts posts={data.attributes.featured_products} /> */}
       </div>
-      <div className="max-w-7xl mx-auto xl:px-0 px-8">
+      <div className="max-w-7xl mx-auto 2xl:px-8 xl:px-8 lg:px-8 md:px-8 px-2">
         <div className="my-16" />
         <Incentives />
       </div>

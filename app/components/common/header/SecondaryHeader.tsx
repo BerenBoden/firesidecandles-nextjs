@@ -17,17 +17,19 @@ export default function SecondaryHeader(data: Page) {
   const { data: session } = useSession();
 
   return (
-    <div className="bg-white px-8 xl:px-0">
+    <div className="bg-white">
       {/* Mobile menu */}
       <MobileMenu data={data} open={open} setOpen={setOpen} />
-
       <header className="relative bg-white">
-        <nav aria-label="Top" className="mx-auto max-w-7xl">
+        <nav
+          aria-label="Top"
+          className="mx-auto max-w-7xl 2xl:px-8 xl:px-8 lg:px-8 md:px-8 px-2"
+        >
           <div className=" border-gray-200">
             <div className="flex h-16 items-center">
               <button
                 type="button"
-                className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
+                className="rounded-md bg-white text-gray-400 lg:hidden"
                 onClick={() => setOpen(true)}
               >
                 <span className="sr-only">Open menu</span>

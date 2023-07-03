@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Features, FeaturesData } from "@/types/types";
-import { extractLargestPhoto } from "@/lib/extractPhotos";
+import { extractLargestPhoto } from "@/utils/extractPhotos";
 
 export default function Featured({ data }: Features) {
   return (

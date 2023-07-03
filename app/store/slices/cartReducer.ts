@@ -1,40 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Cookies } from "react-cookie";
-const cookies = new Cookies();
-const user = cookies.get("user");
-const token = cookies.get("token");
 
 type InitialState = {
-  isAuthenticated: boolean;
-  user: any;
-  token: string | null;
-  admin: boolean;
+  open: boolean;
+  products: any;
 };
 
 const initialState: InitialState = {
-  isAuthenticated: false,
-  user: user ? user : null,
-  token: token ? token : null,
-  admin: false,
+  open: false,
+  products: [],
 };
 
-export const authSlice = createSlice({
-  name: "auth",
+export const cartSlice = createSlice({
+  name: "cart",
   initialState,
   reducers: {
-    setAuthenticated: (state, action) => {
-      state.isAuthenticated = true;
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.admin = action.payload.admin;
+    addProductToCart: (state, action) => {
+      state.products = [...state.products, action.payload.item];
     },
-    setUnauthenticated: (state) => {
-      state.isAuthenticated = false;
-      state.user = null;
-      state.token = null;
-      state.admin = false;
+    removeProductFromCart: (state, action) => {
+      state.products = state.products.filter(
+        (item: any) => item.id !== action.payload.id
+      );
+    },
+    setCartOpen: (state) => {
+      state.open = !state.open;
     },
   },
 });
-export const { setAuthenticated, setUnauthenticated } = authSlice.actions;
-export default authSlice.reducer;
+export const { addProductToCart, removeProductFromCart } = cartSlice.actions;
+export default cartSlice.reducer;

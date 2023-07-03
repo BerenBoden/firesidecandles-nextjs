@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { Transition, Dialog, Tab } from "@headlessui/react";
 import Link from "next/link";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { classNames } from "@/lib/classNames";
+import { classNames } from "@/utils/classNames";
 
 export default function MobileMenu({ data, open, setOpen }: any) {
   return (

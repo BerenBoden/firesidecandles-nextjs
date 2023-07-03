@@ -215,5 +215,6 @@ declare module "next-auth" {
     jti: string;
     jwt: string;
     id: number;
+    refreshToken: string;
   }
 }

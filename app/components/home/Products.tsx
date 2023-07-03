@@ -1,6 +1,6 @@
 "use client";
 import { Product, Products } from "@/types/types";
-import { extractLastPhotos } from "@/lib/extractPhotos";
+import { extractLastPhotos } from "@/utils/extractPhotos";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../common/elements/Button";

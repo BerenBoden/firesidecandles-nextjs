@@ -7,7 +7,7 @@ import SecondaryHeader from "./SecondaryHeader";
 export default function Header({ data }: { data: Page }) {
   return (
     <header className="bg-white fixed w-full h-38">
-      <div className="flex max-w-7xl items-center justify-between py-6 mx-auto px-8 xl:px-0">
+      <div className="flex items-center justify-between py-6 mx-auto max-w-7xl 2xl:px-8 xl:px-8 lg:px-8 md:px-8 px-2">
         <Link href="/">
           <h1 className="font-dancing text-3xl">firesidecandles</h1>
         </Link>
