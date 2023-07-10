@@ -1,13 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
-import { signIn, getSession } from "next-auth/react";
-import axios from "axios";
+import { getSession } from "next-auth/react";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:1337/api/",
   prepareHeaders: async (headers) => {
     const session = await getSession();
     if (session) {
-      console.log(session.jwt);
       headers.set("Authorization", `Bearer ${session.jwt}`);
       return headers;
     }
@@ -17,11 +15,24 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
   const session = await getSession();
   let result: any = await baseQuery(args, api, extraOptions);
-  if (result.error && result.error.status === 401) {
-    const data = await axios.post("http://localhost:1337/api/token/refresh", {
-      ...{ refreshToken: session?.refreshToken },
-    });
-    result.error.data.error.details = data.data.jwt;
+  if (
+    result.error &&
+    (result.error.status === 401 || result.error.status === 403)
+  ) {
+    const data: any = await baseQuery(
+      {
+        url: "token/refresh",
+        method: "post",
+        body: { refreshToken: session?.refreshToken },
+      },
+      api,
+      extraOptions
+    );
+    if (data.data) {
+      //Trying to update the session property to take the new jwt
+      result = await baseQuery(args, api, extraOptions);
+      result.error.data = data.data.jwt;
+    }
   }
   return result;
 };

@@ -1,11 +1,6 @@
 "use client";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
-// import { useGetOrdersQuery } from "../store/services/orderService";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { useEffect, useState } from "react";
+import useCallWithRefresh from "@/hooks/useCallWithRefresh";
+import useRequireLogin from "@/hooks/useRequireLogin";
 import { api } from "@/app/store/api";
 
 const orders = [
@@ -38,27 +33,9 @@ const orders = [
 ];
 
 export default function Page() {
-  const dispatch = useAppDispatch();
-  const { data: session, update } = useSession();
-  useEffect(() => {
-    const result = dispatch(api.endpoints.getOrders.initiate("Orders"));
-    return result.unsubscribe;
-  }, [dispatch]);
-  const orders = useAppSelector(api.endpoints.getOrders.select("Orders"));
-  console.log(`BEFORE:`, session?.jwt);
-  console.log(`BEFORE:`, orders);
-  useEffect(() => {
-    if (orders.error) {
-      (async () => {
-        await update({
-          ...session,
-          jwt: orders.error.data.error.details,
-        });
-      })();
-    }
-  }, []);
-  console.log(`AFTER:`, session?.jwt);
-  console.log(`AFTER:`, orders);
+  useRequireLogin();
+  const orders = useCallWithRefresh(api.endpoints.getOrders, "Orders");
+  console.log(orders);
   return (
     <main className="py-24">
       <div className="mx-auto max-w-7xl 2xl:px-8 xl:px-8 lg:px-8 md:px-8 px-2">
