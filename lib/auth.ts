@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
           user: { email, username: name, id },
           jwt,
         } = await axios
-          .post(`http://localhost:1337/api/auth/local`, {
+          .post(`${process.env.SERVER_URL}auth/local`, {
             identifier: credentials.identifier,
             password: credentials.password,
           })
@@ -41,7 +41,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user, trigger, session }) {
-
       if (trigger === "update" && session) {
         console.log("jwt update");
         return { ...token, ...session };
