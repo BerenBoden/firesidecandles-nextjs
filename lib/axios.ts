@@ -5,7 +5,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:1337/api",
+  baseURL: process.env.SERVER_URL,
 });
 
 const get = <T = any, R = AxiosResponse<T>>(

@@ -6,6 +6,7 @@ import { NextAuthProvider } from "./nextProviders";
 import "./globals.css";
 import CartSlideOver from "./components/common/elements/CartSlideOver";
 import { Page } from "@/types/types";
+import axios from "@/lib/axios";
 
 const dancingScript = Dancing_Script({
   subsets: ["latin"],
@@ -14,11 +15,10 @@ const dancingScript = Dancing_Script({
 });
 
 async function getNavigation(): Promise<Page> {
-  const res = await fetch(
-    `${process.env.TEST_URL}pages?sort=id&populate[categories][populate][category_tags][populate][feature][populate][0]=cover,category_tag`
+  const { data } = await axios.get(
+    `pages?sort=id&populate[categories][populate][category_tags][populate][feature][populate][0]=cover,category_tag`
   );
-  const navigation = await res.json();
-  return navigation;
+  return data;
 }
 
 export default async function RootLayout({

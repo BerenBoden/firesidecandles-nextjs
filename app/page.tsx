@@ -9,12 +9,13 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { Home } from "@/types/types";
 import { Page } from "@/types/types";
+import axios from "@/lib/axios";
 
 async function getHomePage(): Promise<Home> {
-  const res = await fetch(
-    `${process.env.TEST_URL}home?populate[featured_products][populate][0]=covers&populate=meta_data&populate[call_to_action][populate][0]=cover&populate[features][populate][0]=cover`
+  const { data } = await axios.get(
+    `home?populate[featured_products][populate][0]=covers&populate=meta_data&populate[call_to_action][populate][0]=cover&populate[features][populate][0]=cover`,
+    {}
   );
-  const data = await res.json();
   return data;
 }
 
@@ -69,7 +70,6 @@ export default async function Home() {
         <Incentives />
       </div>
       <div className="my-16" />
-  
     </>
   );
 }

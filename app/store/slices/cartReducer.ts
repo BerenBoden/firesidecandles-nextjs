@@ -11,7 +11,10 @@ type InitialState = {
 };
 
 // Try to load the state from local storage
-const savedState = localStorage.getItem("cart");
+let savedState;
+if (typeof window !== "undefined") {
+  savedState = localStorage.getItem("cart");
+}
 const initialState: InitialState = savedState
   ? JSON.parse(savedState)
   : {
