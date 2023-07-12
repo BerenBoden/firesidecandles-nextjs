@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
           user: { email, username: name, id },
           jwt,
         } = await axios
-          .post(`${process.env.SERVER_URL}auth/local`, {
+          .post(`${process.env.TEST_URL}auth/local`, {
             identifier: credentials.identifier,
             password: credentials.password,
           })

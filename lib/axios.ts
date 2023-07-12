@@ -1,3 +1,7 @@
+{
+  /**Not in use yet */
+}
+
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({

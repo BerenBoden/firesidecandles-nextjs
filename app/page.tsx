@@ -5,7 +5,6 @@ import Products from "@/app/components/home/Products";
 import Posts from "@/app/components/home/Posts";
 import Testimonials from "@/app/components/home/Testimonials";
 import Incentives from "./components/home/Incentives";
-import Header from "./components/common/header/Header";
 import { Metadata } from "next";
 import Image from "next/image";
 import { Home } from "@/types/types";
@@ -13,7 +12,7 @@ import { Page } from "@/types/types";
 
 async function getHomePage(): Promise<Home> {
   const res = await fetch(
-    "https://firesidecandles-strapi-production.up.railway.app/api/home?populate[featured_products][populate][0]=covers&populate=meta_data&populate[call_to_action][populate][0]=cover&populate[features][populate][0]=cover"
+    `${process.env.TEST_URL}home?populate[featured_products][populate][0]=covers&populate=meta_data&populate[call_to_action][populate][0]=cover&populate[features][populate][0]=cover`
   );
   const data = await res.json();
   return data;
@@ -70,6 +69,7 @@ export default async function Home() {
         <Incentives />
       </div>
       <div className="my-16" />
+  
     </>
   );
 }

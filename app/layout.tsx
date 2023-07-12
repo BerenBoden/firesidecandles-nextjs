@@ -4,6 +4,7 @@ import Footer from "./components/common/page/Footer";
 import { Providers } from "./store/provider";
 import { NextAuthProvider } from "./nextProviders";
 import "./globals.css";
+import CartSlideOver from "./components/common/elements/CartSlideOver";
 import { Page } from "@/types/types";
 
 const dancingScript = Dancing_Script({
@@ -14,7 +15,7 @@ const dancingScript = Dancing_Script({
 
 async function getNavigation(): Promise<Page> {
   const res = await fetch(
-    "https://firesidecandles-strapi-production.up.railway.app/api/pages?sort=id&populate[categories][populate][category_tags][populate][feature][populate][0]=cover,category_tag"
+    `${process.env.TEST_URL}pages?sort=id&populate[categories][populate][category_tags][populate][feature][populate][0]=cover,category_tag`
   );
   const navigation = await res.json();
   return navigation;
@@ -36,6 +37,7 @@ export default async function RootLayout({
             </div>
             <div className="h-38" />
             <main className="z-0 relative">{children}</main>
+            <CartSlideOver title={"Your cart"} />
             <Footer />
           </body>
         </Providers>

@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { getSession } from "next-auth/react";
+import generateQueryString from "@/utils/generateQueryString";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.SERVER_URL,
+  baseUrl: "https://firesidecandles-strapi-production.up.railway.app/api/",
   prepareHeaders: async (headers) => {
     const session = await getSession();
     if (session) {
@@ -29,7 +30,6 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
       extraOptions
     );
     if (data.data) {
-      //Trying to update the session property to take the new jwt
       result = await baseQuery(args, api, extraOptions);
       result.error.data = data.data.jwt;
     }
@@ -40,8 +40,17 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Orders"],
+  tagTypes: ["Orders", "Products"],
   endpoints: (builder) => ({
+    getCartProducts: builder.query({
+      query: ({ ids }) => {
+        const url = generateQueryString(ids);
+        return {
+          url: url,
+        };
+      },
+      providesTags: ["Products"],
+    }),
     getOrders: builder.query({
       query: () => {
         return {
@@ -52,3 +61,4 @@ export const api = createApi({
     }),
   }),
 });
+

@@ -11,11 +11,15 @@ import Flyout from "./Flyout";
 import MobileMenu from "./MobileMenu";
 import { Page } from "@/types/types";
 import { useSession } from "next-auth/react";
+import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
+import { setCartOpen } from "@/app/store/slices/cartReducer";
 
 export default function SecondaryHeader(data: Page) {
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
-
+  const dispatch = useAppDispatch();
+  const selector = useAppSelector((state) => state.cart.products);
+  const total = selector.reduce((acc, curr) => acc + curr.quantity, 0);
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -96,19 +100,17 @@ export default function SecondaryHeader(data: Page) {
                   </Link>
                 </div>
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Link
-                    href="/cart"
-                    className="group -m-2 flex items-center p-2"
-                  >
+                  <div className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
+                      onClick={() => dispatch(setCartOpen())}
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      0
+                      {total}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </Link>
+                  </div>
                 </div>
               </div>
             </div>
