@@ -16,8 +16,8 @@ type Product = {
 export default function CartSlideOver({ title }: { title: string }) {
   const dispatch = useAppDispatch();
   const open = useAppSelector((state) => state.cart.open);
-  const productData = useAppSelector((state) => state.cart.products);
-  const ids = productData.map((product: Product) => product.id);
+  const products = useAppSelector((state) => state.cart.products);
+  const ids = products.map((product: Product) => product.id);
   const { data }: { data: Products } = useCallWithRefresh(
     api.endpoints.getCartProducts,
     {
@@ -44,21 +44,23 @@ export default function CartSlideOver({ title }: { title: string }) {
               leaveTo="translate-x-full"
             >
               <Dialog.Panel className="pointer-events-auto w-screen max-w-lg h-screen">
-                <div className="flex flex-col bg-white shadow-xl h-full overflow-x-hidden overflow-y-auto">
+                <div className="flex flex-col bg-white shadow-xl h-full overflow-x-hidden">
                   <div className="h-20 flex items-center  px-4 sm:px-6">
-                    <div className="flex items-start justify-between">
-                      <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                        {title}
-                      </Dialog.Title>
-                      <div className="xl:ml-3 2xl:xl:ml-3 lg:xl:ml-3 md:xl:ml-3 m-0 flex items-center">
-                        <button
-                          type="button"
-                          className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                          onClick={() => dispatch(setCartOpen())}
-                        >
-                          <span className="sr-only">Close panel</span>
-                          <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                        </button>
+                    <div className="h-20 flex items-center justify-center">
+                      <div className="flex items-start justify-between">
+                        <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
+                          {title}
+                        </Dialog.Title>
+                        <div className="xl:ml-3 2xl:xl:ml-3 lg:xl:ml-3 md:xl:ml-3 m-0 flex items-center">
+                          <button
+                            type="button"
+                            className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            onClick={() => dispatch(setCartOpen())}
+                          >
+                            <span className="sr-only">Close panel</span>
+                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
