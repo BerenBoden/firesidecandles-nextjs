@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Bars3Icon,
@@ -19,10 +19,13 @@ export default function SecondaryHeader(data: Page) {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const selector = useAppSelector((state) => state.cart.products);
-  const total = selector.reduce((acc, curr) => acc + curr.quantity, 0);
+  const [total, setTotal] = useState(0);
+  useEffect(() => {
+    setTotal(selector.reduce((acc, curr) => acc + curr.quantity, 0));
+  }, []);
+  // console.log(total);
   return (
     <div className="bg-white">
-      {/* Mobile menu */}
       <MobileMenu data={data} open={open} setOpen={setOpen} />
       <header className="relative bg-white">
         <nav
@@ -107,7 +110,7 @@ export default function SecondaryHeader(data: Page) {
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      {total}
+                      {total && total}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </div>
