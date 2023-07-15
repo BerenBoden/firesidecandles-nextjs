@@ -23,7 +23,6 @@ export default function SecondaryHeader(data: Page) {
   useEffect(() => {
     setTotal(selector.reduce((acc, curr) => acc + curr.quantity, 0));
   }, []);
-  // console.log(total);
   return (
     <div className="bg-white">
       <MobileMenu data={data} open={open} setOpen={setOpen} />
