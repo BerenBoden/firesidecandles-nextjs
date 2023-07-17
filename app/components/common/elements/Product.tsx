@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import { extractLastPhotos } from "@/utils/extractPhotos";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,10 +11,13 @@ import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
 
 export default function Product({ attributes, id }: Product) {
   const dispatch = useAppDispatch();
+  const [quantity, setQuantity] = useState<number | null>(null);
   const product = useAppSelector((state) =>
     state.cart.products.find((product) => product.id === id)
   );
-
+  useEffect(() => {
+    setQuantity(product?.quantity || null);
+  }, [product]);
   return (
     <div key={id} className="group relative">
       <div className="mb-1 aspect-h-1 aspect-w-1 w-full overflow-hidden shadow-sm border transition bg-gray-200 lg:aspect-none group-hover:opacity-75 cursor-pointer lg:h-80">
@@ -31,7 +35,7 @@ export default function Product({ attributes, id }: Product) {
           className="w-1/2 flex justify-center text-black items-center bg-opacity-0 border shadow-sm hover:opacity-50 cursor-pointer"
         >
           <ShoppingBagIcon className="w-6  text-black mr-2" />{" "}
-          <p className="text-black font-thin">{product?.quantity}</p>
+          <p className="text-black font-thin">{quantity}</p>
         </Button>{" "}
         <Button className="w-1/2 flex justify-center items-center bg-opacity-0 border shadow-sm hover:opacity-50 cursor-pointer">
           <HeartIcon className="w-6 text-black" />

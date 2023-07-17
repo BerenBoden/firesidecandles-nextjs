@@ -18,11 +18,12 @@ export default function SecondaryHeader(data: Page) {
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
-  const selector = useAppSelector((state) => state.cart.products);
   const [total, setTotal] = useState(0);
+  const cart = useAppSelector((state) => state.cart);
   useEffect(() => {
-    setTotal(selector.reduce((acc, curr) => acc + curr.quantity, 0));
-  }, []);
+    setTotal(cart.total || 0);
+  }, [cart]);
+  console.log(total);
   return (
     <div className="bg-white">
       <MobileMenu data={data} open={open} setOpen={setOpen} />
@@ -109,7 +110,7 @@ export default function SecondaryHeader(data: Page) {
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      {total && total}
+                      {total}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </div>

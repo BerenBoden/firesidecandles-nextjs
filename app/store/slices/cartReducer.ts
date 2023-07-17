@@ -8,6 +8,7 @@ type Product = {
 type InitialState = {
   open: boolean;
   products: Product[];
+  total: number;
 };
 
 // Try to load the state from local storage
@@ -29,29 +30,34 @@ export const cartSlice = createSlice({
     addProductToCart: (state, action: PayloadAction<{ id: number }>) => {
       const product = state.products.find((p) => p.id === action.payload.id);
       if (product) {
-        product.quantity += 1; // increment quantity if product already exists in cart
+        product.quantity += 1;
       } else {
-        state.products.push({ id: action.payload.id, quantity: 1 }); // add product to cart with quantity 1 if it doesn't exist yet
+        state.products.push({ id: action.payload.id, quantity: 1 });
       }
-      // Save the state to local storage
+      state.total = state.products.reduce(
+        (total, product) => total + product.quantity,
+        0
+      ); // recalculate the total quantity
       localStorage.setItem("cart", JSON.stringify(state));
     },
     removeProductFromCart: (state, action: PayloadAction<{ id: number }>) => {
       const product = state.products.find((p) => p.id === action.payload.id);
       if (product) {
-        product.quantity -= 1; // decrement quantity
+        product.quantity -= 1;
         if (product.quantity <= 0) {
           state.products = state.products.filter(
             (p) => p.id !== action.payload.id
-          ); // remove product from cart if quantity is 0 or less
+          );
         }
       }
-      // Save the state to local storage
+      state.total = state.products.reduce(
+        (total, product) => total + product.quantity,
+        0
+      ); // recalculate the total quantity
       localStorage.setItem("cart", JSON.stringify(state));
     },
     setCartOpen: (state) => {
       state.open = !state.open;
-      // Save the state to local storage
       localStorage.setItem("cart", JSON.stringify(state));
     },
   },
