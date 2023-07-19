@@ -9,13 +9,13 @@ import {
   addProductToItemList,
 } from "@/app/store/slices/itemListReducer";
 import Button from "@/app/components/common/elements/Button";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function CartItem({ product }: { product: Product }) {
   const dispatch = useAppDispatch();
   const { type } = useAppSelector((state) => state.itemList.openState);
   const products = useAppSelector((state) => state.itemList[type].products);
   const { id, attributes } = product;
-  console.log(products);
   return (
     <li key={id} className="flex py-6 sm:py-10">
       <div className="flex-shrink-0 cursor-pointer">
@@ -36,7 +36,7 @@ export default function CartItem({ product }: { product: Product }) {
             <div className="flex justify-between">
               <h3 className="text-sm">
                 <Link
-                  href={attributes.slug}
+                  href={`shop/${attributes.slug}`}
                   className="font-medium text-gray-700 hover:text-gray-800"
                 >
                   {attributes.title}
@@ -58,19 +58,28 @@ export default function CartItem({ product }: { product: Product }) {
                   dispatch(removeProductFromItemList({ id, type }))
                 }
                 type="button"
-                className="-m-2 bg-opacity-0 inline-flex p-2 text-gray-400 hover:text-gray-500"
+                className="-m-2 mr-2 bg-opacity-0 inline-flex p-2 text-gray-400 hover:text-gray-500"
               >
                 <span className="sr-only">Remove</span>
-                <MinusIcon className="h-5 w-5 text-black" aria-hidden="true" />
+                {type === "cart" ? (
+                  <MinusIcon
+                    className="h-5 w-5 text-black"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <XMarkIcon className="h-5 w-5 text-black" />
+                )}
               </Button>
-              <Button
-                onClick={() => dispatch(addProductToItemList({ id, type }))}
-                type="button"
-                className="-m-2 bg-opacity-0 inline-flex p-2 text-gray-400 hover:text-gray-500"
-              >
-                <span className="sr-only">Remove</span>
-                <PlusIcon className="h-5 w-5 text-black" aria-hidden="true" />
-              </Button>
+              {type === "cart" && (
+                <Button
+                  onClick={() => dispatch(addProductToItemList({ id, type }))}
+                  type="button"
+                  className="-m-2 bg-opacity-0 inline-flex p-2 text-gray-400 hover:text-gray-500"
+                >
+                  <span className="sr-only">Remove</span>
+                  <PlusIcon className="h-5 w-5 text-black" aria-hidden="true" />
+                </Button>
+              )}
             </div>
           </div>
         </div>

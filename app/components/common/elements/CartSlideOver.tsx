@@ -18,7 +18,6 @@ export default function CartSlideOver() {
   const dispatch = useAppDispatch();
   const { open, type } = useAppSelector((state) => state.itemList.openState);
   const products = useAppSelector((state) => state.itemList[type].products);
-  console.log(products);
   const ids = products.map((product: Product) => product.id);
   const { data }: { data: Products } = useCallWithRefresh(
     api.endpoints.getCartProducts,
@@ -26,13 +25,12 @@ export default function CartSlideOver() {
       ids,
     }
   );
-  console.log(data);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 overflow-hidden z-10"
-        onClose={() => dispatch(setItemListOpen({ type: "cart" }))}
+        onClose={() => dispatch(setItemListOpen({ type }))}
       >
         <div className="absolute inset-0 overflow-hidden">
           <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full ">
@@ -57,9 +55,7 @@ export default function CartSlideOver() {
                           <Button
                             type="button"
                             className="bg-opacity-0 text-gray-400 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            onClick={() =>
-                              dispatch(setItemListOpen({ type: "cart" }))
-                            }
+                            onClick={() => dispatch(setItemListOpen({ type }))}
                           >
                             <span className="sr-only">Close panel</span>
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -77,7 +73,6 @@ export default function CartSlideOver() {
                       <h2 id="cart-heading" className="sr-only">
                         Items in your shopping cart
                       </h2>
-
                       <ul
                         role="list"
                         className={`divide-y divide-gray-200 border-b ${
@@ -114,7 +109,7 @@ export default function CartSlideOver() {
                             <span>Shipping estimate</span>
                             <a
                               href="#"
-                              className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
+                              className="ml-c2 flex-shrink-0 text-gray-400 hover:text-gray-500"
                             >
                               <span className="sr-only">
                                 Learn more about how shipping is calculated

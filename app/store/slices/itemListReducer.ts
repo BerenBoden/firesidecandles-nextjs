@@ -48,17 +48,29 @@ export const itemListSlice = createSlice({
       const product = state[action.payload.type].products.find(
         (p) => p.id === action.payload.id
       );
-      if (product) {
-        product.quantity += 1;
-      } else {
-        state[action.payload.type].products.push({
-          id: action.payload.id,
-          quantity: 1,
-        });
+      if (action.payload.type === "cart") {
+        if (product) {
+          product.quantity += 1;
+        } else {
+          state[action.payload.type].products.push({
+            id: action.payload.id,
+            quantity: 1,
+          });
+        }
+        state[action.payload.type].total = state[
+          action.payload.type
+        ].products.reduce((total, product) => total + product.quantity, 0); // recalculate the total quantity
+      } else if (action.payload.type === "wishlist") {
+        if (!product) {
+          state[action.payload.type].products.push({
+            id: action.payload.id,
+            quantity: 1,
+          });
+        }
+        state[action.payload.type].total =
+          state[action.payload.type].products.length;
       }
-      state[action.payload.type].total = state[
-        action.payload.type
-      ].products.reduce((total, product) => total + product.quantity, 0); // recalculate the total quantity
+
       localStorage.setItem(
         action.payload.type,
         JSON.stringify(state[action.payload.type])
