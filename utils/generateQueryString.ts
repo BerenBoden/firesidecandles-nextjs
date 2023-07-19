@@ -14,7 +14,6 @@ export default function generateQueryString(ids: number[]) {
       $in: {},
     },
   };
-  
   if (ids.length <= 0) return `products?filters[id][$eq]=-1`;
   ids.forEach((id, index) => {
     filters.id.$in[index] = id;

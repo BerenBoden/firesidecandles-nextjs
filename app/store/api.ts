@@ -43,7 +43,7 @@ export const api = createApi({
   tagTypes: ["Orders", "Products"],
   endpoints: (builder) => ({
     getCartProducts: builder.query({
-      query: ({ ids }) => {
+      query: ({ ids, type }) => {
         const url = generateQueryString(ids);
         return {
           url: url,

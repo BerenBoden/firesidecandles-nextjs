@@ -3,34 +3,35 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
-import { setCartOpen } from "@/app/store/slices/cartReducer";
+import { setItemListOpen } from "@/app/store/slices/itemListReducer";
 import CartItem from "@/app/cart/components/CartItem";
 import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import useCallWithRefresh from "@/hooks/useCallWithRefresh";
 import { api } from "@/app/store/api";
 import { Products, Product as ProductData } from "@/types/types";
+import Button from "./Button";
 type Product = {
   id: number;
   quantity: number;
 };
-export default function CartSlideOver({ title }: { title: string }) {
+export default function CartSlideOver() {
   const dispatch = useAppDispatch();
-  const open = useAppSelector((state) => state.cart.open);
-  const products = useAppSelector((state) => state.cart.products);
-  const ids = products.map((product: Product) => product.id);
-  const { data }: { data: Products } = useCallWithRefresh(
-    api.endpoints.getCartProducts,
-    {
-      ids,
-    }
-  );
-  console.log(data);
+  const { open, type } = useAppSelector((state) => state.itemList.openState);
+  const products = useAppSelector((state) => state.itemList[type].products);
+  console.log(products);
+  // const ids = products.map((product: Product) => product.id);
+  // const { data }: { data: Products } = useCallWithRefresh(
+  //   api.endpoints.getCartProducts,
+  //   {
+  //     ids,
+  //   }
+  // );
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 overflow-hidden z-10"
-        onClose={() => dispatch(setCartOpen())}
+        onClose={() => dispatch(setItemListOpen({ type: "cart" }))}
       >
         <div className="absolute inset-0 overflow-hidden">
           <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full ">
@@ -46,20 +47,22 @@ export default function CartSlideOver({ title }: { title: string }) {
               <Dialog.Panel className="pointer-events-auto w-screen max-w-lg h-screen">
                 <div className="flex flex-col bg-white shadow-xl h-full overflow-x-hidden">
                   <div className="h-20 flex items-center  px-4 sm:px-6">
-                    <div className="h-20 flex items-center justify-center">
-                      <div className="flex items-start justify-between">
+                    <div className="h-20 flex items-center justify-center w-full">
+                      <div className="flex items-start justify-between w-full">
                         <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                          {title}
+                          Your {type}
                         </Dialog.Title>
                         <div className="xl:ml-3 2xl:xl:ml-3 lg:xl:ml-3 md:xl:ml-3 m-0 flex items-center">
-                          <button
+                          <Button
                             type="button"
-                            className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            onClick={() => dispatch(setCartOpen())}
+                            className="bg-opacity-0 text-gray-400 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            onClick={() =>
+                              dispatch(setItemListOpen({ type: "cart" }))
+                            }
                           >
                             <span className="sr-only">Close panel</span>
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                          </button>
+                          </Button>
                         </div>
                       </div>
                     </div>
@@ -74,7 +77,7 @@ export default function CartSlideOver({ title }: { title: string }) {
                         Items in your shopping cart
                       </h2>
 
-                      <ul
+                      {/* <ul
                         role="list"
                         className={`divide-y divide-gray-200 border-b ${
                           data?.data?.length > 0 && "border-t"
@@ -83,7 +86,7 @@ export default function CartSlideOver({ title }: { title: string }) {
                         {data?.data?.map((product: ProductData) => (
                           <CartItem product={product} />
                         ))}
-                      </ul>
+                      </ul> */}
                     </section>
 
                     {/* Order summary */}

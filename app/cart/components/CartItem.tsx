@@ -5,14 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
 import {
-  removeProductFromCart,
-  addProductToCart,
-} from "@/app/store/slices/cartReducer";
+  removeProductFromItemList,
+  addProductToItemList,
+} from "@/app/store/slices/itemListReducer";
 import Button from "@/app/components/common/elements/Button";
 
 export default function CartItem({ product }: { product: Product }) {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.cart.products);
+  const { type } = useAppSelector((state) => state.itemList.openState);
+  const products = useAppSelector((state) => state.itemList[type].products);
   const { id, attributes } = product;
   console.log(products);
   return (
@@ -53,7 +54,9 @@ export default function CartItem({ product }: { product: Product }) {
             {products.find((product) => product.id === id)?.quantity || 0}
             <div className="absolute right-0 top-0">
               <Button
-                onClick={() => dispatch(removeProductFromCart({ id }))}
+                onClick={() =>
+                  dispatch(removeProductFromItemList({ id, type }))
+                }
                 type="button"
                 className="-m-2 bg-opacity-0 inline-flex p-2 text-gray-400 hover:text-gray-500"
               >
@@ -61,7 +64,7 @@ export default function CartItem({ product }: { product: Product }) {
                 <MinusIcon className="h-5 w-5 text-black" aria-hidden="true" />
               </Button>
               <Button
-                onClick={() => dispatch(addProductToCart({ id }))}
+                onClick={() => dispatch(addProductToItemList({ id, type }))}
                 type="button"
                 className="-m-2 bg-opacity-0 inline-flex p-2 text-gray-400 hover:text-gray-500"
               >

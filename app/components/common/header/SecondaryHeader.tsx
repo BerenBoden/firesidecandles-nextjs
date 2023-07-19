@@ -12,17 +12,20 @@ import MobileMenu from "./MobileMenu";
 import { Page } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/app/store/hooks";
-import { setCartOpen } from "@/app/store/slices/cartReducer";
+import { setItemListOpen } from "@/app/store/slices/itemListReducer";
 
 export default function SecondaryHeader(data: Page) {
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
-  const [total, setTotal] = useState(0);
-  const cart = useAppSelector((state) => state.cart);
+  const [total, setTotal] = useState({ cart: 0, wishlist: 0 });
+  const wishlistTotal = useAppSelector(
+    (state) => state.itemList.wishlist.total
+  );
+  const cartTotal = useAppSelector((state) => state.itemList.cart.total);
   useEffect(() => {
-    setTotal(cart.total || 0);
-  }, [cart]);
+    setTotal({ cart: cartTotal, wishlist: wishlistTotal });
+  }, [wishlistTotal, cartTotal]);
   console.log(total);
   return (
     <div className="bg-white">
@@ -86,31 +89,33 @@ export default function SecondaryHeader(data: Page) {
                   </Link>
                 </div>
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Link
-                    href="/wishlist"
-                    className="group -m-2 flex items-center p-2"
-                  >
+                  <div className="group -m-2 flex items-center p-2">
                     <HeartIcon
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
+                      onClick={() =>
+                        dispatch(setItemListOpen({ type: "wishlist" }))
+                      }
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      0
+                      {total.wishlist}
                     </span>
                     <span className="sr-only">
                       items in wishlist, view wishlist
                     </span>
-                  </Link>
+                  </div>
                 </div>
                 <div className="ml-4 flow-root lg:ml-6">
                   <div className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
-                      onClick={() => dispatch(setCartOpen())}
+                      onClick={() =>
+                        dispatch(setItemListOpen({ type: "cart" }))
+                      }
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      {total}
+                      {total.cart}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </div>
