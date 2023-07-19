@@ -37,7 +37,7 @@ export default async function RootLayout({
             </div>
             <div className="h-38" />
             <main className="z-0 relative">{children}</main>
-            <CartSlideOver title={"Your cart"} />
+            <CartSlideOver />
             <Footer />
           </body>
         </Providers>
