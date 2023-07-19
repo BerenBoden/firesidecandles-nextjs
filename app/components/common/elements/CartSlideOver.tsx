@@ -19,13 +19,14 @@ export default function CartSlideOver() {
   const { open, type } = useAppSelector((state) => state.itemList.openState);
   const products = useAppSelector((state) => state.itemList[type].products);
   console.log(products);
-  // const ids = products.map((product: Product) => product.id);
-  // const { data }: { data: Products } = useCallWithRefresh(
-  //   api.endpoints.getCartProducts,
-  //   {
-  //     ids,
-  //   }
-  // );
+  const ids = products.map((product: Product) => product.id);
+  const { data }: { data: Products } = useCallWithRefresh(
+    api.endpoints.getCartProducts,
+    {
+      ids,
+    }
+  );
+  console.log(data);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -77,7 +78,7 @@ export default function CartSlideOver() {
                         Items in your shopping cart
                       </h2>
 
-                      {/* <ul
+                      <ul
                         role="list"
                         className={`divide-y divide-gray-200 border-b ${
                           data?.data?.length > 0 && "border-t"
@@ -86,7 +87,7 @@ export default function CartSlideOver() {
                         {data?.data?.map((product: ProductData) => (
                           <CartItem product={product} />
                         ))}
-                      </ul> */}
+                      </ul>
                     </section>
 
                     {/* Order summary */}
