@@ -24,15 +24,17 @@ export default function Product({ attributes, id }: Product) {
   }, [products]);
   return (
     <div key={id} className="group relative">
-      <div className="mb-1 aspect-h-1 aspect-w-1 w-full overflow-hidden shadow-sm border transition bg-gray-200 lg:aspect-none group-hover:opacity-75 cursor-pointer lg:h-80">
-        <Image
-          src={extractLastPhotos(attributes.covers).url}
-          alt={extractLastPhotos(attributes.covers).alternativeText}
-          width={500}
-          height={500}
-          className="h-64 w-full object-cover object-center lg:h-full lg:w-full"
-        />
-      </div>
+      <Link href={`/product/${attributes.slug}`}>
+        <div className="mb-1 aspect-h-1 aspect-w-1 w-full overflow-hidden shadow-sm border transition bg-gray-200 lg:aspect-none group-hover:opacity-75 cursor-pointer lg:h-80">
+          <Image
+            src={extractLastPhotos(attributes.covers).url}
+            alt={extractLastPhotos(attributes.covers).alternativeText}
+            width={500}
+            height={500}
+            className="h-64 w-full object-cover object-center lg:h-full lg:w-full"
+          />
+        </div>
+      </Link>
       <div className="w-full flex">
         <Button
           onClick={() => dispatch(addProductToItemList({ id, type: "cart" }))}

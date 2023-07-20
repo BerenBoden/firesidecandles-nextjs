@@ -48,7 +48,6 @@ export default function CartItem({ product }: { product: Product }) {
           <div className="mt-4 sm:mt-0 sm:pr-9">
             <label htmlFor={`quantity`} className="sr-only">
               Quantity,{" "}
-              {products.find((product) => product.id === id)?.quantity || 0}
             </label>
 
             {products.find((product) => product.id === id)?.quantity || 0}
