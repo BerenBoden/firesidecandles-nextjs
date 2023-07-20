@@ -53,7 +53,7 @@ export default function Product({ attributes, id }: Product) {
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-700">
-            <Link href={`/shop/${attributes.slug}`}>
+            <Link href={`/product/${attributes.slug}`}>
               {/* <span aria-hidden="true" className="absolute inset-0" /> */}
               {attributes.title}
             </Link>

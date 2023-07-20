@@ -36,7 +36,7 @@ export default function CartItem({ product }: { product: Product }) {
             <div className="flex justify-between">
               <h3 className="text-sm">
                 <Link
-                  href={`shop/${attributes.slug}`}
+                  href={`/product/${attributes.slug}`}
                   className="font-medium text-gray-700 hover:text-gray-800"
                 >
                   {attributes.title}
