@@ -18,7 +18,13 @@ module.exports = {
         142: "36rem",
       },
       width: {
+        38: "150px",
+        104: "26rem",
         112: "28rem",
+        120: "30rem",
+        128: "32rem",
+        136: "34rem",
+        142: "36rem",
       },
       fontFamily: {
         dancing: ["var(--font-dancing-script)"],

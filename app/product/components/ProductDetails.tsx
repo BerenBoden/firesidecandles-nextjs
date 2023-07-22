@@ -4,7 +4,8 @@ import { Disclosure, RadioGroup, Tab } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { classNames } from "@/utils/classNames";
-import { Cover, CoverAttributes, Product } from "@/types/types";
+import Image from "next/image";
+import { CoverAttributes, Product } from "@/types/types";
 import { getLargestImageUrl } from "@/utils/extractPhotos";
 
 const product = {
@@ -94,8 +95,10 @@ export default function ProductDetails({ data }: { data: Product }) {
                         <>
                           <span className="sr-only"></span>
                           <span className="absolute inset-0 overflow-hidden rounded-md">
-                            <img
+                            <Image
                               src={getLargestImageUrl(attributes).url}
+                              width={500}
+                              height={500}
                               alt={
                                 getLargestImageUrl(attributes).alternativeText
                               }
@@ -118,15 +121,25 @@ export default function ProductDetails({ data }: { data: Product }) {
             </div>
 
             <Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
-              {product.images.map((image) => (
-                <Tab.Panel key={image.id}>
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="h-full w-full object-cover object-center sm:rounded-lg"
-                  />
-                </Tab.Panel>
-              ))}
+              {attributes.covers.data.map(
+                ({
+                  id,
+                  attributes,
+                }: {
+                  id: number;
+                  attributes: CoverAttributes;
+                }) => (
+                  <Tab.Panel key={id}>
+                    <Image
+                      src={getLargestImageUrl(attributes).url}
+                      alt={getLargestImageUrl(attributes).alternativeText}
+                      width={1000}
+                      height={1000}
+                      className="h-128 w-128 object-cover object-center border shadow-sm"
+                    />
+                  </Tab.Panel>
+                )
+              )}
             </Tab.Panels>
           </Tab.Group>
 
@@ -170,7 +183,7 @@ export default function ProductDetails({ data }: { data: Product }) {
 
               <div
                 className="space-y-6 text-base text-gray-700"
-                dangerouslySetInnerHTML={{ __html: product.description }}
+                dangerouslySetInnerHTML={{ __html: attributes.content }}
               />
             </div>
 
