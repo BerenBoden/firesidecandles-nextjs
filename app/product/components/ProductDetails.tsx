@@ -146,13 +146,13 @@ export default function ProductDetails({ data }: { data: Product }) {
           {/* Product info */}
           <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              {product.name}
+              {attributes.title}
             </h1>
 
             <div className="mt-3">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl tracking-tight text-gray-900">
-                {product.price}
+                ${attributes.price}
               </p>
             </div>
 
