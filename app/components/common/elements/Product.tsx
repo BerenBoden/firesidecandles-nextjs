@@ -13,7 +13,6 @@ export default function Product({ attributes, id }: Product) {
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState<number | null>(null);
   const { type } = useAppSelector((state) => state.itemList.openState);
-  console.log(type);
   const { products } = useAppSelector((state) => state.itemList[type]);
   useEffect(() => {
     let items;

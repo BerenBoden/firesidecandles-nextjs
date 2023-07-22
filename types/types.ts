@@ -78,7 +78,7 @@ interface Formats {
   [key: string]: Format;
 }
 
-interface CoverAttributes {
+export interface CoverAttributes {
   name: string;
   alternativeText: string;
   caption: string | null;

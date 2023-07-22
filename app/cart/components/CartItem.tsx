@@ -1,5 +1,5 @@
 import { MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
-import { Product } from "@/types/types";
+import { Product, ProductAttributes } from "@/types/types";
 import { extractLastPhotos } from "@/utils/extractPhotos";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,18 +11,23 @@ import {
 import Button from "@/app/components/common/elements/Button";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function CartItem({ product }: { product: Product }) {
+export default function CartItem({
+  attributes,
+  id,
+}: {
+  attributes: ProductAttributes;
+  id: number;
+}) {
   const dispatch = useAppDispatch();
   const { type } = useAppSelector((state) => state.itemList.openState);
   const products = useAppSelector((state) => state.itemList[type].products);
-  const { id, attributes } = product;
   return (
-    <li key={id} className="flex py-6 sm:py-10">
+    <li className="flex py-6 sm:py-10">
       <div className="flex-shrink-0 cursor-pointer">
         <Link href={attributes.slug}>
           <Image
-            src={extractLastPhotos(product.attributes.covers).url}
-            alt={extractLastPhotos(product.attributes.covers).alternativeText}
+            src={extractLastPhotos(attributes.covers).url}
+            alt={extractLastPhotos(attributes.covers).alternativeText}
             width={500}
             height={500}
             className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"

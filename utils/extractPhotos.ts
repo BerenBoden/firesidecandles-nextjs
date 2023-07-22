@@ -1,4 +1,4 @@
-import { Cover, Covers } from "@/types/types";
+import { Cover, Covers, CoverAttributes } from "@/types/types";
 
 //Singular
 export function extractLargestPhoto(cover: Cover) {
@@ -93,3 +93,21 @@ export function extractAllPhotos(covers: Covers | undefined) {
 
   return largestPhotos;
 }
+
+export const getLargestImageUrl = (image: CoverAttributes) => {
+  let largestFormat = image.formats.thumbnail;
+
+  for (let formatName in image.formats) {
+    if (
+      image.formats[formatName].width * image.formats[formatName].height >
+      largestFormat.width * largestFormat.height
+    ) {
+      largestFormat = image.formats[formatName];
+    }
+  }
+
+  return {
+    alternativeText: image.alternativeText,
+    url: largestFormat.url,
+  };
+};

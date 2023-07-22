@@ -79,8 +79,8 @@ export default function CartSlideOver() {
                           data?.data?.length > 0 && "border-t"
                         } border-gray-200`}
                       >
-                        {data?.data?.map((product: ProductData) => (
-                          <CartItem product={product} />
+                        {data?.data?.map(({ id, attributes }: ProductData) => (
+                          <CartItem key={id} attributes={attributes} id={id} />
                         ))}
                       </ul>
                     </section>

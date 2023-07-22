@@ -4,7 +4,8 @@ import { Disclosure, RadioGroup, Tab } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { classNames } from "@/utils/classNames";
-import { Product } from "@/types/types";
+import { Cover, CoverAttributes, Product } from "@/types/types";
+import { getLargestImageUrl } from "@/utils/extractPhotos";
 
 const product = {
   name: "Zip Tote Basket",
@@ -15,6 +16,18 @@ const product = {
       id: 1,
       name: "Angled view",
       src: "https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg",
+      alt: "Angled front view with bag zipped and handles upright.",
+    },
+    {
+      id: 2,
+      name: "Angled view",
+      src: "https://tailwindui.com/img/ecommerce-images/product-page-03-product-02.jpg",
+      alt: "Angled front view with bag zipped and handles upright.",
+    },
+    {
+      id: 3,
+      name: "Angled view",
+      src: "https://tailwindui.com/img/ecommerce-images/product-page-03-product-03.jpg",
       alt: "Angled front view with bag zipped and handles upright.",
     },
     // More images...
@@ -51,9 +64,11 @@ const product = {
     // More sections...
   ],
 };
+
 export default function ProductDetails({ data }: { data: Product }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  console.log(data);
+  const { attributes } = data;
+  console.log(attributes);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -63,32 +78,42 @@ export default function ProductDetails({ data }: { data: Product }) {
             {/* Image selector */}
             <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
               <Tab.List className="grid grid-cols-4 gap-6">
-                {product.images.map((image) => (
-                  <Tab
-                    key={image.id}
-                    className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
-                  >
-                    {({ selected }) => (
-                      <>
-                        <span className="sr-only">{image.name}</span>
-                        <span className="absolute inset-0 overflow-hidden rounded-md">
-                          <img
-                            src={image.src}
-                            alt=""
-                            className="h-full w-full object-cover object-center"
+                {attributes.covers.data.map(
+                  ({
+                    id,
+                    attributes,
+                  }: {
+                    id: number;
+                    attributes: CoverAttributes;
+                  }) => (
+                    <Tab
+                      key={id}
+                      className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
+                    >
+                      {({ selected }) => (
+                        <>
+                          <span className="sr-only"></span>
+                          <span className="absolute inset-0 overflow-hidden rounded-md">
+                            <img
+                              src={getLargestImageUrl(attributes).url}
+                              alt={
+                                getLargestImageUrl(attributes).alternativeText
+                              }
+                              className="h-full w-full object-cover object-center"
+                            />
+                          </span>
+                          <span
+                            className={classNames(
+                              selected ? "ring-indigo-500" : "ring-transparent",
+                              "pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2"
+                            )}
+                            aria-hidden="true"
                           />
-                        </span>
-                        <span
-                          className={classNames(
-                            selected ? "ring-indigo-500" : "ring-transparent",
-                            "pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2"
-                          )}
-                          aria-hidden="true"
-                        />
-                      </>
-                    )}
-                  </Tab>
-                ))}
+                        </>
+                      )}
+                    </Tab>
+                  )
+                )}
               </Tab.List>
             </div>
 

@@ -26,7 +26,6 @@ export default function SecondaryHeader(data: Page) {
   useEffect(() => {
     setTotal({ cart: cartTotal, wishlist: wishlistTotal });
   }, [wishlistTotal, cartTotal]);
-  console.log(total);
   return (
     <div className="bg-white">
       <MobileMenu data={data} open={open} setOpen={setOpen} />
