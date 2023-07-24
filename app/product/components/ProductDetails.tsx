@@ -9,6 +9,9 @@ import Image from "next/image";
 import { CoverAttributes, Product } from "@/types/types";
 import { getLargestImageUrl } from "@/utils/extractPhotos";
 import { useItemStatus } from "@/hooks/useItemStatus";
+import Button from "@/app/components/common/elements/Button";
+import { useAppDispatch } from "@/app/store/hooks";
+import { addProductToItemList } from "@/app/store/slices/itemListReducer";
 
 const product = {
   name: "Zip Tote Basket",
@@ -70,6 +73,7 @@ const product = {
 
 export default function ProductDetails({ data }: { data: Product }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  const dispatch = useAppDispatch();
   const { id, attributes } = data;
   const { isInWishlist, isInCart } = useItemStatus(id);
   return (
@@ -189,7 +193,7 @@ export default function ProductDetails({ data }: { data: Product }) {
               />
             </div>
 
-            <form className="mt-6">
+            <div className="mt-6">
               {/* Colors */}
               <div>
                 <h3 className="text-sm text-gray-600">Color</h3>
@@ -233,26 +237,31 @@ export default function ProductDetails({ data }: { data: Product }) {
               </div>
 
               <div className="mt-10 flex">
-                <button
-                  type="submit"
+                <Button
+                  onClick={() =>
+                    dispatch(addProductToItemList({ id, type: "cart" }))
+                  }
                   className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
                 >
-                  Add to bag
-                </button>
+                  Add to cart
+                  <span className="sr-only">Add to cart</span>
+                </Button>
 
-                <button
-                  type="button"
+                <Button
+                  onClick={() =>
+                    dispatch(addProductToItemList({ id, type: "wishlist" }))
+                  }
                   className="ml-4 flex items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                 >
                   {isInWishlist ? (
-                    <HeartIconSolid className="w-6  text-black mr-2" />
+                    <HeartIconSolid className="w-6 text-black" />
                   ) : (
-                    <HeartIcon className="w-6  text-black mr-2" />
+                    <HeartIcon className="w-6 text-black" />
                   )}
-                  <span className="sr-only">Add to favorites</span>
-                </button>
+                  <span className="sr-only">Add to wishlist</span>
+                </Button>
               </div>
-            </form>
+            </div>
 
             <section aria-labelledby="details-heading" className="mt-12">
               <h2 id="details-heading" className="sr-only">
