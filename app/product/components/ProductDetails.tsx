@@ -3,10 +3,12 @@ import { useState } from "react";
 import { Disclosure, RadioGroup, Tab } from "@headlessui/react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { HeartIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import { classNames } from "@/utils/classNames";
 import Image from "next/image";
 import { CoverAttributes, Product } from "@/types/types";
 import { getLargestImageUrl } from "@/utils/extractPhotos";
+import { useItemStatus } from "@/hooks/useItemStatus";
 
 const product = {
   name: "Zip Tote Basket",
@@ -68,8 +70,8 @@ const product = {
 
 export default function ProductDetails({ data }: { data: Product }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const { attributes } = data;
-  console.log(attributes);
+  const { id, attributes } = data;
+  const { isInWishlist, isInCart } = useItemStatus(id);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -242,10 +244,11 @@ export default function ProductDetails({ data }: { data: Product }) {
                   type="button"
                   className="ml-4 flex items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
                 >
-                  <HeartIcon
-                    className="h-6 w-6 flex-shrink-0"
-                    aria-hidden="true"
-                  />
+                  {isInWishlist ? (
+                    <HeartIconSolid className="w-6  text-black mr-2" />
+                  ) : (
+                    <HeartIcon className="w-6  text-black mr-2" />
+                  )}
                   <span className="sr-only">Add to favorites</span>
                 </button>
               </div>
