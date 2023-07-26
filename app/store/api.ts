@@ -59,6 +59,14 @@ export const api = createApi({
       },
       providesTags: ["Orders"],
     }),
+    postRegister: builder.mutation({
+      query: (body) => {
+        return {
+          url: "auth/local/register",
+          method: "POST",
+          body,
+        };
+      },
+    }),
   }),
 });
-
