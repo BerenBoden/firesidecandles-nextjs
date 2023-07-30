@@ -4,11 +4,12 @@ import { useForm } from "react-hook-form";
 import Button from "../components/common/elements/Button";
 import { useRouter } from "next/navigation";
 import { api } from "@/app/store/api";
+import { useDispatch } from "react-redux";
 
 type FormData = {
-  fullName: string;
+  username: string;
   lastName: string;
-  identifier: string;
+  email: string;
   password: string;
 };
 
@@ -35,6 +36,7 @@ interface ErrorDetail {
 
 export default function Register() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -43,25 +45,26 @@ export default function Register() {
   } = useForm<FormData>({
     shouldUnregister: true,
     defaultValues: {
-      fullName: "",
-      identifier: "",
+      username: "",
+      email: "",
       password: "",
     },
   });
-
   const onSubmit = async (data: FormData) => {
     {
       /**Todo: Make type for login response */
     }
-    const response: any = api.endpoints.postRegister.initiate({ body: data });
-    const error: Errors = JSON.parse(response.error);
+    const response = await dispatch(
+      api.endpoints.postRegister.initiate({ data }) as any
+    );
+    const error: Errors = response.error.data;
     if (error) {
       if (!Array.isArray(error.error.details.errors)) {
-        setError("identifier", {
+        setError("email", {
           type: "manual",
           message: "Email is required",
         } as ErrorOption);
-        setError("fullName", {
+        setError("username", {
           type: "manual",
           message: "First name is required",
         } as ErrorOption);
@@ -81,6 +84,7 @@ export default function Register() {
       router.push("/dashboard");
     }
   };
+  console.log(errors);
   return (
     <div className="flex min-h-full flex-1 max-w-7xl mx-auto xl:px-0 px-8 my-12">
       <div className="mx-auto w-1/2">
@@ -98,62 +102,61 @@ export default function Register() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
                 <label
-                  htmlFor="fullNameSign in"
+                  htmlFor="usernameSign in"
                   className={`block text-sm font-medium leading-6 text-gray-900 ${
-                    errors.fullName ? "text-red-500" : ""
+                    errors.username ? "text-red-500" : ""
                   }`}
                 >
-                  First name
+                  Full name
                 </label>
                 <div className="mt-2">
                   <input
-                    id="fullName"
-                    {...register("fullName")}
-                    name="fullName"
+                    id="username"
+                    {...register("username")}
+                    name="username"
                     className={`block w-full  p-2 border shadow-sm placeholder:text-gray-400  sm:text-sm sm:leading-6 ${
-                      errors.fullName ? "border-red-500" : ""
+                      errors.username ? "border-red-500" : ""
                     }`}
                   />
                   <p
                     className={`h-4 capitalize text-xs italic mt-2 text-red-500 ${
-                      errors.fullName ? "visible" : "invisible"
+                      errors.username ? "visible" : "invisible"
                     }`}
                   >
-                    {typeof errors.fullName?.message === "object"
-                      ? (errors.fullName?.message as { message: string })
+                    {typeof errors.username?.message === "object"
+                      ? (errors.username?.message as { message: string })
                           .message
-                      : errors.fullName?.message}
+                      : errors.username?.message}
                   </p>
                 </div>
               </div>
 
               <div>
                 <label
-                  htmlFor="identifier"
+                  htmlFor="email"
                   className={`block text-sm font-medium leading-6 text-gray-900 ${
-                    errors.identifier ? "text-red-500" : ""
+                    errors.email ? "text-red-500" : ""
                   }`}
                 >
                   Email address
                 </label>
                 <div className="mt-2">
                   <input
-                    id="identifier"
-                    {...register("identifier")}
-                    name="identifier"
+                    id="email"
+                    {...register("email")}
+                    name="email"
                     className={`block w-full  p-2 border shadow-sm placeholder:text-gray-400  sm:text-sm sm:leading-6 ${
-                      errors.identifier ? "border-red-500" : ""
+                      errors.email ? "border-red-500" : ""
                     }`}
                   />
                   <p
                     className={`h-4 capitalize text-xs italic mt-2 text-red-500 ${
-                      errors.identifier ? "visible" : "invisible"
+                      errors.email ? "visible" : "invisible"
                     }`}
                   >
-                    {typeof errors.identifier?.message === "object"
-                      ? (errors.identifier?.message as { message: string })
-                          .message
-                      : errors.identifier?.message}
+                    {typeof errors.email?.message === "object"
+                      ? (errors.email?.message as { message: string }).message
+                      : errors.email?.message}
                   </p>
                 </div>
               </div>
@@ -292,4 +295,3 @@ export default function Register() {
     </div>
   );
 }
-{/*Todo*/}

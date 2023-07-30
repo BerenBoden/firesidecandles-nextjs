@@ -1,5 +1,5 @@
 import { MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
-import { Product, ProductAttributes } from "@/types/types";
+import { ProductAttributes } from "@/types/types";
 import { extractLastPhotos } from "@/utils/extractPhotos";
 import Image from "next/image";
 import Link from "next/link";

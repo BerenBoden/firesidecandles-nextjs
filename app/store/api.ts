@@ -40,7 +40,7 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["Orders", "Products"],
+  tagTypes: ["Orders", "Products", "Auth"],
   endpoints: (builder) => ({
     getCartProducts: builder.query({
       query: ({ ids, type }) => {
@@ -59,14 +59,15 @@ export const api = createApi({
       },
       providesTags: ["Orders"],
     }),
-    postRegister: builder.mutation({
-      query: (body) => {
+    postRegister: builder.query({
+      query: (data) => {
         return {
           url: "auth/local/register",
           method: "POST",
-          body,
+          body: data,
         };
       },
+      providesTags: ["Auth"],
     }),
   }),
 });
